@@ -4,12 +4,8 @@ function App() {
 
   return (
     <>
-    <div className="h-screen flex flex-col justify-center items-center bg-bg-empty text-mono-blanco">
-      <h1 className="text-4xl font-bold text-semaforo-verde">¡Hola, mundo! 🚀</h1>
-      <p className="text-essentials-primary shadow p-2 mb-100">Este es un texto en rojo.</p>
-      <button className="mt-10 bg-shopper-primary text-white rounded-md">
-        Botón Shopper
-      </button>
+    <div className="bg-semaforo-verde p-3 flex justify-center items-center h-[100vh]">
+      <p className='mt-10'>HOLA</p>
     </div>
     </>
   );
