@@ -27,7 +27,7 @@ export default {
                     <p class="text-[20px]">Hoy es un excelente dia para vender, inicia sesión y sácale el jugo a tu App.</p>
                 </div>
 
-                <form action="#" method="post" class="mt-10 flex flex-col gap-8">
+                <form action="#" method="post" class="mt-5 flex flex-col gap-5">
                     <div class="w-[100%]">
                         <p class="my-[5px] text-[14px]">Usuario:</p>
                         <div
