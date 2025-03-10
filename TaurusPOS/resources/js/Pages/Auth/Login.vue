@@ -1,4 +1,4 @@
-<script setup>
+<!-- <script setup>
 import Checkbox from '@/Components/Checkbox.vue';
 import GuestLayout from '@/Layouts/GuestLayout.vue';
 import InputError from '@/Components/InputError.vue';
@@ -97,4 +97,17 @@ const submit = () => {
             </div>
         </form>
     </GuestLayout>
-</template>
+</template> -->
+
+<template>
+    <div class="container mx-auto p-4">
+      <h1 class="text-2xl font-bold text-center text-semaforo-rojo">Bienvenido a Mi Aplicación estas en el home de vue </h1>
+    </div>
+  </template>
+  
+  <script>
+  export default {
+    name: 'Login',
+  }
+  </script>
+  
