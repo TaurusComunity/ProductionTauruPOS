@@ -1,3 +1,14 @@
+<script>
+import { Head } from '@inertiajs/vue3';
+
+export default {
+  name: 'Auth',
+  components: {
+    Head,
+  },
+}
+</script>
+
 <template>
     <div>
       <Head title="Login" />
@@ -13,7 +24,7 @@
                 </div>
                 <div class="welcome">
                     <h2 class="text-[35px] font-bold mt-[20px]">Bienvenido Nuevamente 👋</h2>
-                    <p class="text-[20px]">Hoy es un excelente dia para vender, inicia sesión y sácale el jugo a tu App Machine.</p>
+                    <p class="text-[20px]">Hoy es un excelente dia para vender, inicia sesión y sácale el jugo a tu App.</p>
                 </div>
 
                 <form action="#" method="post" class="mt-10 flex flex-col gap-8">
@@ -29,9 +40,9 @@
             
                           <input
                             type="number"
-                            id=""
+                            id="user"
                             class="w-full focus:outline-none focus:border-none font-normal bg-mono-negro text-blanco"
-                            placeholder=""
+                            placeholder="Ingresa tu usuario establecido."
                             name="user"
                           />
                         </div>
@@ -49,9 +60,9 @@
             
                           <input
                             type="password"
-                            id=""
+                            id="password"
                             class="w-full focus:outline-none focus:border-none font-normal bg-mono-negro text-blanco"
-                            placeholder=""
+                            placeholder="Ingresa tu contraseña."
                             name="password"
                           />
                         </div>
@@ -67,20 +78,13 @@
 
                 </form>
             </div>
-            <div class="right  w-[40%]">Diseñar imagen de referencia de la app</div>
+            <div class="right w-[40%] rounded-lg flex justify-center items-center shadowM">
+                <img src="https://images.unsplash.com/photo-1638657527755-ca3e0d217260?q=80&w=1376&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Img login" class="rounded-lg"
+            </div>
         </main>
   </div>
     </div>
   </template>
   
-  <script>
-  import { Head } from '@inertiajs/vue3';
-  
-  export default {
-    name: 'Auth',
-    components: {
-      Head,
-    },
-  }
-  </script>
+
   
