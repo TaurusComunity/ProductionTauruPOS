@@ -6,6 +6,6 @@ Route::get('/', function () {
     return Inertia::render('Home');
 });
 
-Route::get('/login', function () {
-    return Inertia::render('Auth/Login');
+Route::get('/auth', function () {
+    return Inertia::render('Auth/Auth');
 });
