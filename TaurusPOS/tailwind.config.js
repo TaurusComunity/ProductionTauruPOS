@@ -15,6 +15,9 @@ module.exports = {
                 bg: {
                   empty: '#1F1D2B',
                 },
+                universal:{
+                  naranja: '',
+                },
                 semaforo: {
                   verde: '#1BCC75',
                   verde_opacity: '#1bcc763f',
