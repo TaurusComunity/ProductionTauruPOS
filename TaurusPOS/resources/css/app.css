@@ -2,7 +2,9 @@
 
 @tailwind base;
 @tailwind components;
-@tailwind utilities {
+@tailwind utilities; 
+
+body{
     /* Estilos generales del scrollbar */
     .scrollbar-custom::-webkit-scrollbar {
       width: 4px;
