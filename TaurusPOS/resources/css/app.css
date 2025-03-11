@@ -217,9 +217,7 @@ body{
     scale: .9;
 }
 
-.material-symbols-rounded{
-    background: transparent;
-}
+
 
 .btn-link{
     background: var(--primary_essentials);
