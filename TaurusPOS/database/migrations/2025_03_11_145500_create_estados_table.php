@@ -28,7 +28,7 @@ class CreateEstadosTable extends Migration
                 'Peligro',
                 'Revisión',
                 'Suspendida'
-            ]);
+            ])->notNull();
             $table->timestamp('fecha_creacion')->useCurrent();
             $table->timestamp('fecha_modificacion')->useCurrent()->useCurrentOnUpdate();
         });
