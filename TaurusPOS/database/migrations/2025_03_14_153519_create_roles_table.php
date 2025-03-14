@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('roles_administrativos', function (Blueprint $table) {
             $table->id(); // ID autoincremental (equivalente a INT PRIMARY KEY AUTO_INCREMENT)
             $table->unsignedBigInteger('id_estado')->default(1);
-            $table->enum('tipo_rol', ["Administrador", "Empleado", "Cliente"])->nullable(false);
+            $table->enum('tipo_rol', ["Administrador", "Empleado", "Cliente", "SuperAdmin"])->nullable(false);
            
            
             $table->timestamp('fecha_creacion')->default(DB::raw('CURRENT_TIMESTAMP'));
@@ -29,6 +29,7 @@ return new class extends Migration
             ['tipo_rol' => 'Administrador'],
             ['tipo_rol' => 'Empleado'],
             ['tipo_rol' => 'Cliente'],
+            ['tipo_rol' => 'SuperAdmin'],
         ]);
 
     }
