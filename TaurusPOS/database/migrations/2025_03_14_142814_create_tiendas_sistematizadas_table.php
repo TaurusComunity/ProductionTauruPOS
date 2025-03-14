@@ -32,7 +32,7 @@ return new class extends Migration
             // Si necesitas una relación con otra tabla, por ejemplo, estados:
             $table->foreign('id_estado')->references('id')->on('estados')->onDelete('cascade');
             $table->foreign('id_token')->references('id')->on('token_accesos')->onDelete('cascade');
-            $table->foreign('id_aplacacion_web')->references('id')->on('aplicaciones_web')->onDelete('cascade');
+            $table->foreign('id_aplicacion_web')->references('id')->on('aplicaciones_web')->onDelete('cascade');
             $table->foreign('id_tipo_documento')->references('id')->on('tipo_documentos')->onDelete('cascade');
             $table->foreign('id_cliente_taurus')->references('id')->on('clientes_taurus')->onDelete('cascade');
         });

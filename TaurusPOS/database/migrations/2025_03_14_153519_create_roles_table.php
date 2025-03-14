@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('roles', function (Blueprint $table) {
+        Schema::create('roles_administrativos', function (Blueprint $table) {
             $table->id(); // ID autoincremental (equivalente a INT PRIMARY KEY AUTO_INCREMENT)
             $table->unsignedBigInteger('id_estado')->default(1);
             $table->enum('tipo_rol', ["Administrador", "Empleado", "Cliente"])->nullable(false);
@@ -25,7 +25,7 @@ return new class extends Migration
             
         });
 
-        DB::table('roles')->insert([
+        DB::table('roles_administrativos')->insert([
             ['tipo_rol' => 'Administrador'],
             ['tipo_rol' => 'Empleado'],
             ['tipo_rol' => 'Cliente'],
