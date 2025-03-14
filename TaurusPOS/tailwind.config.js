@@ -16,7 +16,8 @@ module.exports = {
                   empty: '#1F1D2B',
                 },
                 universal:{
-                  naranja: '',
+                  naranja: '#FE4F2D',
+                  azul: '#4F959D',
                 },
                 semaforo: {
                   verde: '#1BCC75',

@@ -16,7 +16,7 @@ export default {
         <main class="flex items-center justify-between h-[100vh] w-[80%] p-[80px] gap-16">
             <div class="left w-[60%]">
                 <div class="logo flex gap-3 items-center">
-                    <div class="gota h-7 w-10 shadow-essentials bg-essentials-primary rounded-full"></div>
+                    <div class="gota h-7 w-10 shadow-essentials bg-universal-naranja rounded-full"></div>
                     <div class="logo">
                         <h1 class="text-[20px] font-semibold">Taurus Comunity CO</h1>
                         <p class="-mt-[8px] text-[14px] font-medium">Software profesional Essentials App</p>
@@ -34,7 +34,7 @@ export default {
                           class="w-[100%] transition-all rounded-[5px] border-[1px] border-secundary-light p-[3px] flex items-center gap-[8px]"
                         >
                           <span
-                            class="material-symbols-rounded text-essentials-primary text-[20px] pl-[5px]"
+                            class="material-symbols-rounded text-universal-naranja text-[20px] pl-[5px]"
                             >people</span
                           >
             
@@ -54,7 +54,7 @@ export default {
                           class="w-[100%] transition-all rounded-[5px] border-[1px] border-secundary-light p-[3px] flex items-center gap-[8px]"
                         >
                           <span
-                            class="material-symbols-rounded text-essentials-primary text-[20px] pl-[5px]"
+                            class="material-symbols-rounded text-universal-naranja text-[20px] pl-[5px]"
                             >password</span
                           >
             
@@ -68,13 +68,13 @@ export default {
                         </div>
                       </div>
 
-                    <a href="" class="text-essentials-primary text-right">Olvidé mi contraseña</a>
+                    <a href="" class="text-universal-azul text-right">Olvidé mi contraseña</a>
 
-                    <button type="submit" class="btn-essentials">Iniciar sessión <span class="material-symbols-rounded bg-transparent">bolt</span></button>
+                    <button type="submit" class="btn-taurus">Iniciar sessión <span class="material-symbols-rounded bg-transparent">bolt</span></button>
 
-                    <p class="text-center">¿No tienes una cuenta con nosotros?, <a href="" class="text-essentials-secundary">contáctenos</a>.</p>
+                    <p class="text-center">¿No tienes una cuenta con nosotros?, <a href="" class="text-universal-azul">contáctenos</a>.</p>
 
-                    <p class="text-essentials-primary text-center text-[12px]">Versión Deimos 1.0.0</p>
+                    <p class="text-universal-azul text-center text-[12px]">Versión Deimos 1.0.0</p>
 
                 </form>
             </div>
