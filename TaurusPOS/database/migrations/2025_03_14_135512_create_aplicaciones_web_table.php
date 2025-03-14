@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('aplicaciones_web', function (Blueprint $table) {
             $table->id(); // ID autoincremental (equivalente a INT PRIMARY KEY AUTO_INCREMENT)
             $table->unsignedBigInteger('id_estado')->default(1);
-            $table->unsignedBigInteger('id_plan_aplicacion');
+            $table->unsignedBigInteger('id_plan_aplicacion')->nullable(false);
             $table->string('nombre_app')->nullable(false);
             $table->timestamp('fecha_creacion')->default(DB::raw('CURRENT_TIMESTAMP'));
             $table->timestamp('fecha_modificacion')->default(DB::raw('CURRENT_TIMESTAMP'))->useCurrentOnUpdate();
