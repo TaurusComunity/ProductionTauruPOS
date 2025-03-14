@@ -6,9 +6,6 @@ use Illuminate\Support\Facades\Schema;
 
 class CreateMediosPagoTable extends Migration
 {
-    /**
-     * Run the migrations.
-     */
     public function up(): void
     {
         
@@ -38,9 +35,8 @@ class CreateMediosPagoTable extends Migration
             ['tipo_pago' => 'Otro medio de pago'],
         ]);
     }
-     /**
-     * Reverse the migrations.
-     */
+
+    
     public function down(): void
     {
         Schema::dropIfExists('medios_pago');
