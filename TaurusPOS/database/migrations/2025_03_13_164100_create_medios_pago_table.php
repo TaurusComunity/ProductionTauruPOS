@@ -18,7 +18,7 @@ class CreateMediosPagoTable extends Migration
                     "Daviplata", 
                     "Tarjeta", 
                     "Otro medio de pago"
-                    ])->notNull();
+                    ])->nullable(false);
                 $table->timestamp('fecha_creacion')->default(DB::raw('CURRENT_TIMESTAMP'));
                 $table->timestamp('fecha_modificacion')->default(DB::raw('CURRENT_TIMESTAMP'))->useCurrentOnUpdate();
                 
