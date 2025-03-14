@@ -1,13 +1,9 @@
 <?php
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\File;
 use Inertia\Inertia;
 
-require __DIR__.'/admin.php';
-
-Route::get('/', function () {
-    return Inertia::render('Home');
-});
-
-Route::get('/auth', function () {
-    return Inertia::render('Auth/Auth');
-});
+$routesPath = __DIR__ . '/web';
+foreach (File::allFiles($routesPath) as $routeFile) {
+    require_once $routeFile->getPathname();
+}
