@@ -12,8 +12,8 @@ export default {
 
 
 <template>
-  <title>Panel cliente</title>
+  <title>Panel empleado Essentials</title>
   <div class="grid place-items-center h-screen">
-    <h2>Panel Cliente</h2>
+    <h2>Panel Empleado Essentials</h2>
   </div>
 </template>

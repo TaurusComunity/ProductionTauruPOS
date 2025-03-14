@@ -255,8 +255,48 @@ body {
 
 
 
-.btn-link {
+.btn-link-essentials {
   background: var(--primary_essentials);
+  border-radius: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 6px;
+}
+.btn-link-guru {
+  background: var(--primary_guru);
+  border-radius: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 6px;
+}
+.btn-link-shopper {
+  background: var(--primary_shopper);
+  border-radius: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 6px;
+}
+.btn-link-smart {
+  background: var(--primary_smart);
+  border-radius: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 6px;
+}
+.btn-link-machine {
+  background: var(--primary_machine);
+  border-radius: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 6px;
+}
+.btn-link-taurus {
+  background: var(--naranja);
   border-radius: 100%;
   display: flex;
   justify-content: center;

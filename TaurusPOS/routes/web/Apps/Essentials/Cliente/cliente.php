@@ -5,8 +5,9 @@ use Illuminate\Support\Facades\Route;
 
 Route::prefix('essentials/cliente')->group(function () {
     Route::get('/dashboard', function () {
-        return Inertia::render('Cliente/Dashboard');
-    })->name('cliente.dashboard');
+        return Inertia::render('Apps/Essentials/Cliente/Dashboard');
+
+    })->name('essentials.cliente.dashboard');
 });
 
 Route::get('/swap', function () {

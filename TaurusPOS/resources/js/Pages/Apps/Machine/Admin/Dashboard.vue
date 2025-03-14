@@ -73,7 +73,7 @@ onUnmounted(() => {
 <template>
     <div>
 
-        <Head title="¡Bienvenido!" />
+        <Head title="Dashboard Essentials" />
 
 
         <div class="bg-mono flex scrollbar-custom">
