@@ -3,10 +3,10 @@
 use Inertia\Inertia;
 use Illuminate\Support\Facades\Route;
 
-Route::prefix('admin')->group(function () {
+Route::prefix('essentials/cliente')->group(function () {
     Route::get('/dashboard', function () {
-        return Inertia::render('Admin/Dashboard');
-    })->name('admin.dashboard');
+        return Inertia::render('Cliente/Dashboard');
+    })->name('cliente.dashboard');
 });
 
 Route::get('/swap', function () {
