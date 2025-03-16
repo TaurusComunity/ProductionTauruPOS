@@ -5,7 +5,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::prefix('essentials/empleado')->group(function () {
     Route::get('/dashboard', function () {
-        return Inertia::render('Apps/Essentials/Admin/Dashboard');
+        return Inertia::render('Apps/Essentials/Empleado/Dashboard');
     })->name('essentials.empleado.dashboard');
 });
 
