@@ -25,7 +25,7 @@ import logo from '@images/logoTC.svg'
         </div>
   
         <!-- Botón para Swap -->
-        <div :class="currentRoute === 'essentials.admin.multisucursales' || currentRoute === 'essentials.admin.infoSucursal' ? 'btn-link-essentials' : 'btn-link-disable'">
+        <div :class="currentRoute === 'essentials.admin.multisucursales' || currentRoute === 'essentials.admin.infoSucursal' || currentRoute === 'essentials.admin.crearItem' ? 'btn-link-essentials' : 'btn-link-disable'">
           <a :href="route('essentials.admin.multisucursales')" class="bg-transparent flex items-center justify-center">
             <span class="material-symbols-rounded"> swap_horiz </span>
           </a>

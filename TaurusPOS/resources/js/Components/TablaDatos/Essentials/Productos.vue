@@ -15,7 +15,7 @@ const props = defineProps({
         receta: 'Receta A',
         stock: 8,
         estado: 'Activo',
-        precio_final: 15.99,
+        precio_final: 1599,
         imagen: "logo"
       },
       {
@@ -26,8 +26,9 @@ const props = defineProps({
         receta: 'Receta B',
         stock: 12,
         estado: 'Suspendido',
-        precio_final: 25.50,
-        imagen: 'https://via.placeholder.com/60'
+        precio_final: 2550,
+        imagen: "logo"
+
       },
       {
         id: 3,
@@ -37,8 +38,9 @@ const props = defineProps({
         receta: 'Receta C',
         stock: 16,
         estado: 'Inactivo',
-        precio_final: 30.00,
-        imagen: 'https://via.placeholder.com/60'
+        precio_final: 3000,
+        imagen: "logo"
+
       }
     ]
   },
@@ -122,12 +124,12 @@ function handleBeforeLeave(el) {
           <td class="text-[14px] p-2">{{ producto.categoria }}</td>
           <td class="text-[14px] p-2">{{ producto.receta }}</td>
           <td class="text-[14px] p-2">
-            <span class="p-2 rounded-lg font-bold" :class="getStockClass(producto.stock)">
+            <span class="p-1 rounded-[5px] font-bold" :class="getStockClass(producto.stock)">
               {{ producto.stock }} unidades
             </span>
           </td>
           <td class="text-[14px] p-2">
-            <span class="p-2 rounded-lg font-bold" :class="getEstadoClass(producto.estado)">
+            <span class="p-1 rounded-[5px] font-bold" :class="getEstadoClass(producto.estado)">
               {{ producto.estado }}
             </span>
           </td>

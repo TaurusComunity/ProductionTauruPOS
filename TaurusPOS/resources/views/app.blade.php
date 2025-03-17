@@ -12,7 +12,7 @@
   @vite(['resources/css/app.css', 'resources/js/app.js'])
   <!-- <title>Taurus POS</title> -->
 </head>
-<body class="bg-mono-negro">
+<body class="bg-mono-negro scrollbar-custom">
   @inertia
 </body>
 </html>

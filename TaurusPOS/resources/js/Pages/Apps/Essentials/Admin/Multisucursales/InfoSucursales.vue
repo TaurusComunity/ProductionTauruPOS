@@ -131,18 +131,13 @@ const searchQuery = ref('');
                     </div>
                     
 
-                    <!-- 
-                     <a :href="route('essentials.admin.infoSucursal')">
-                            <button class="btn-essentials-secundary">Ir a mi sucursal <span
+                  
+                     <a :href="route('essentials.admin.crearItem')">
+                            <button class="btn-essentials-secundary">Agregar items a esta bodega<span
                                 class="material-symbols-rounded"> outbound </span></button>
                         </a>
-                    Botón para abrir el modal -->
-                    <a>
-                        <button class="btn-essentials">
-                            Agregar items a esta bodega
-                            <span class="material-symbols-rounded"> outbound </span>
-                        </button>
-                    </a>
+                    
+                    
 
                 </div>
 
@@ -190,7 +185,7 @@ const searchQuery = ref('');
                 </div>
 
                 <!-- formulario -->
-                <Productos :productos="productos" :searchQuery="searchQuery" />
+                <Productos :searchQuery="searchQuery" />
             </main>
 
 
