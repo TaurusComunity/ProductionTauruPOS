@@ -5,12 +5,12 @@ import BarraCalendario from '@/Components/BarraCalendario/BarraCalendario.vue';
 import DetallesPlan from '@/Components/Dashboard/DetallesPlan.vue';
 import SaludoOpciones from '@/Components/header/Essentials/SaludoOpciones.vue';
 import CardHistorial from '@/Components/Dashboard/Essentials/CardHistorial.vue';
-import Modal from '@/Components/Modales/Essentials/Modal.vue';
+import Productos from '@/Components/TablaDatos/Essentials/Productos.vue';
 
 
 
 export default {
-    name: 'Multisucursales',
+    name: 'InfoSucursales',
     components: {
         Head,
     },
@@ -97,7 +97,7 @@ const createBranch = () => {
 <template>
     <div>
 
-        <Head title="Mis bodegas Essentials" />
+        <Head title="Info de mi sucursal" />
 
 
         <div class="bg-mono flex scrollbar-custom">
@@ -112,68 +112,82 @@ const createBranch = () => {
                         <p>Dashboard</p>
                     </a>
                     <span class="material-symbols-rounded text-[18px]">chevron_right</span>
-                    <p class="font-bold">Sucursales activas</p>
+                    <a :href="route('essentials.admin.multisucursales')" class="hover:text-essentials-secundary">
+                        <p>Sucursales activas</p>
+                    </a>
+                    <span class="material-symbols-rounded text-[18px]">chevron_right</span>
+                    <p class="font-bold">Informacion de mi sucursal</p>
                 </div>
 
                 <!-- header administrativo -->
                 <div class="titulo-input-btn mt-4 flex justify-between items-center gap-5">
-                    <h4 class="font-semibold text-[25px]">Multisucursales</h4>
+                    <h4 class="font-semibold text-[25px]">Gestion de sucursal</h4>
                     <div class="input-buscador">
-                        <input type="search" placeholder="Buscar contenido...">
+                        <input v-model="searchQuery" type="search" placeholder="Buscar producto..."
+                            class="" />
                         <span class="material-symbols-rounded text-essentials-primary">travel_explore</span>
                     </div>
 
-                    <!-- Botón para abrir el modal -->
-                    <button @click="showModal = true" class="btn-essentials">
-                        Crear nueva sucursal
-                        <span class="material-symbols-rounded"> outbound </span>
-                    </button>
-                </div>
-
-                <div class="tarjetas-sucursales my-7">
-                    <div class="card-sucursal flex flex-col gap-2  max-w-[25%] rounded-lg p-3">
-                        <img src="../Assets/img/Recursos Essentials/img-sucursal.jpg" alt="img de ref local"
-                            class="rounded-lg">
-                        <div class="icono-id-nombre flex gap-2 ">
-                            <span
-                                class="material-symbols-rounded flex justify-center items-center h-10 w-10 text-[14px] bg-essentials-primary rounded-lg">
-                                swap_horiz </span>
-                            <div class="idd-nombre text-[14px]">
-                                <p>(Ttiulo de la sucursal)</p>
-                                <p>Sucursal ID: <span>"Id registrado en BD"</span></p>
-                            </div>
-                        </div>
-                       
-                         <a :href="route('essentials.admin.infoSucursal')">
+                    <!-- 
+                     <a :href="route('essentials.admin.infoSucursal')">
                             <button class="btn-essentials-secundary">Ir a mi sucursal <span
                                 class="material-symbols-rounded"> outbound </span></button>
                         </a>
+                    Botón para abrir el modal -->
+                    <a>
+                        <button class="btn-essentials">
+                            Agregar items a esta bodega
+                            <span class="material-symbols-rounded"> outbound </span>
+                        </button>
+                    </a>
 
-                    </div>
                 </div>
 
-                <!-- Modal -->
-                <Modal :isOpen="showModal" titulo="Creación de una nueva sucursal" descripcion="En este apartado podrás crear una nueva sucursal de tu tienda, recuerda
-            llenar todos los campos correspondientes." confirmText="Confirmar creación" @close="showModal = false"
-                    @confirm="createBranch">
-                    <div class="mt-[5px] flex flex-col justify-between gap-3 w-full">
-                        <div class="mt-[10px] w-[100%]">
-                            <p class="my-[5px] text-[14px]">Título sucursal:</p>
-                            <div class="input-insertar">
-                                <input type="text" placeholder="Ponle un nombre a tu sucursal." v-model="branchTitle" />
-                                <span class="material-symbols-rounded text-essentials-primary">format_italic</span>
-                            </div>
+                <div class="tarjetas-overviews my-7 flex w-full gap-2 justify-between">
+                    <div class="border border-secundary-light rounded-lg w-full p-2 flex justify-between items-center">
+                        <div class="metodoPago-monto">
+                            <p class="text-[12px]">Son datos y hay que darlos</p>
+                            <p class="text-[14px]">Producto con menor Stock:</p>
+                            <p class="font-bold text-[18px]">Producto pronto a terminarse</p>
                         </div>
-
-                        <div class="mt-[5px] w-[100%]">
-                            <p class="my-[5px] text-[14px]">Descripción de la sucursal:</p>
-                            <div class="input-insertar">
-                                <input type="text" placeholder="Describela brevemente." v-model="branchDescription" />
-                                <span class="material-symbols-rounded text-essentials-primary">format_italic</span>
-                            </div>
+                        <div
+                            class="contador bg-essentials-primary p-2 rounded-md flex justify-center items-center shadow-essentials w-10 h-10 font-bold">
+                            <span class="material-symbols-rounded">
+                                category
+                            </span>
                         </div>
                     </div>
-                </Modal>
+                    <div class="border border-secundary-light rounded-lg w-full p-2 flex justify-between items-center">
+                        <div class="metodoPago-monto">
+                            <p class="text-[12px]">Son datos y hay que darlos</p>
+                            <p class="text-[14px]">Ultimo movimiento en la base de datos:</p>
+                            <p class="font-bold text-[18px]">Fecha de ultimo movimiento</p>
+                        </div>
+                        <div
+                            class="contador bg-essentials-primary p-2 rounded-md flex justify-center items-center shadow-essentials w-10 h-10 font-bold">
+                            <span class="material-symbols-rounded">
+                                edit_calendar
+                            </span>
+                        </div>
+                    </div>
+                    <div class="border border-secundary-light rounded-lg w-full p-2 flex justify-between items-center">
+                        <div class="metodoPago-monto">
+                            <p class="text-[12px]">Son datos y hay que darlos</p>
+                            <p class="text-[14px]">Items registrados:</p>
+                            <p class="font-bold text-[18px]">total de items</p>
+                        </div>
+                        <div
+                            class="contador bg-essentials-primary p-2 rounded-md flex justify-center items-center shadow-essentials w-10 h-10 font-bold">
+                            <span class="material-symbols-rounded">
+                                diversity_1
+                            </span>
+                        </div>
+                    </div>
+
+                </div>
+
+                <!-- formulario -->
+                <Productos />
             </main>
 
 
