@@ -138,7 +138,7 @@ const validarNumero = (event, field) => {
 <template>
     <div>
 
-        <Head title="Gestión de gastos" />
+        <Head title="Gestión de mis gastos" />
 
 
         <div class="bg-mono flex scrollbar-custom">
