@@ -1,7 +1,20 @@
+<script setup>
+import { computed } from 'vue';
+import { usePage } from '@inertiajs/inertia-vue3';
+import { route } from 'ziggy-js'; // Importación nombrada
+
+const page = usePage();
+const currentRoute = computed(() => page.props.value.currentRoute);
+import logo from '@images/logoTC.svg'
+</script>
+
+
 <template>
     <div class="h-[100vh] w-[60px] flex items-center p-[20px]">
       <aside class="w-[60px] flex justify-center flex-col gap-2 items-center bg-secundary-default p-2 rounded-full">
-        <div class="gota h-12 w-12 shadow-essentials bg-essentials-primary rounded-full z-10"></div>
+        <div class="gota h-12 w-12 shadowM bg-essentials-primary rounded-full z-10">
+          <img :src="logo" alt="Logo" class="h-12 w-12 rounded-full" />
+        </div>
 
   
         <!-- Botón para Dashboard -->
@@ -17,6 +30,7 @@
             <span class="material-symbols-rounded"> swap_horiz </span>
           </a>
         </div>
+
 
         <!-- Botón para Swap -->
         <div :class="currentRoute === 'swap' ? 'btn-link-essentials' : 'btn-link-disable'">
@@ -84,12 +98,4 @@
     </div>
   </template>
   
-  <script setup>
-  import { computed } from 'vue';
-  import { usePage } from '@inertiajs/inertia-vue3';
-  import { route } from 'ziggy-js'; // Importación nombrada
-  
-  const page = usePage();
-  const currentRoute = computed(() => page.props.value.currentRoute);
-  </script>
-  
+ 
