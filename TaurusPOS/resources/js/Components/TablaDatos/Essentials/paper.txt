@@ -1,46 +1,10 @@
 <script setup>
-import { ref, computed } from 'vue';
-import logo from '@images/logoTC.svg'
-
+import { computed } from 'vue';
 
 const props = defineProps({
   productos: {
     type: Array,
-    default: () => [
-      {
-        id: 1,
-        nombre: 'Producto A',
-        descripcion: 'Descripción del Producto A',
-        categoria: 'Categoría 1',
-        receta: 'Receta A',
-        stock: 8,
-        estado: 'Activo',
-        precio_final: 15.99,
-        imagen: "logo"
-      },
-      {
-        id: 2,
-        nombre: 'Producto B',
-        descripcion: 'Descripción del Producto B',
-        categoria: 'Categoría 2',
-        receta: 'Receta B',
-        stock: 12,
-        estado: 'Suspendido',
-        precio_final: 25.50,
-        imagen: 'https://via.placeholder.com/60'
-      },
-      {
-        id: 3,
-        nombre: 'Producto C',
-        descripcion: 'Descripción del Producto C',
-        categoria: 'Categoría 3',
-        receta: 'Receta C',
-        stock: 16,
-        estado: 'Inactivo',
-        precio_final: 30.00,
-        imagen: 'https://via.placeholder.com/60'
-      }
-    ]
+    default: () => []
   },
   searchQuery: {
     type: String,
@@ -51,22 +15,9 @@ const props = defineProps({
 const filteredProductos = computed(() => {
   if (!props.productos || !Array.isArray(props.productos)) return [];
   if (!props.searchQuery.trim()) return props.productos;
-
-  const query = props.searchQuery.toLowerCase().trim();
-
-  return props.productos.filter(producto => {
-    return (
-      // Búsqueda exacta en valores específicos
-      String(producto.id).toLowerCase() === query ||
-      producto.nombre.toLowerCase().includes(query) ||
-      producto.descripcion.toLowerCase().includes(query) ||
-      producto.categoria.toLowerCase().includes(query) ||
-      producto.estado.toLowerCase() === query || // Busca el estado completo, no fragmentos
-      producto.receta.toLowerCase().includes(query) ||
-      String(producto.stock).toLowerCase() === query ||
-      String(producto.precio_final).toLowerCase() === query
-    );
-  });
+  return props.productos.filter(producto =>
+    producto.nombre.toLowerCase().includes(props.searchQuery.toLowerCase())
+  );
 });
 
 function getStockClass(stock) {
@@ -79,14 +30,6 @@ function getEstadoClass(estado) {
   if (estado === 'Inactivo') return 'bg-semaforo-rojo';
   if (estado === 'Suspendido') return 'bg-semaforo-amarillo';
   if (estado === 'Activo') return 'bg-semaforo-verde';
-}
-
-function handleBeforeEnter(el) {
-  el.classList.add('animate-fadeIn');
-}
-
-function handleBeforeLeave(el) {
-  el.classList.add('animate-fadeOut');
 }
 </script>
 
@@ -107,15 +50,11 @@ function handleBeforeLeave(el) {
           <th class="p-2 text-left">Acciones</th>
         </tr>
       </thead>
-      <transition-group
-        tag="tbody"
-        @before-enter="handleBeforeEnter"
-        @before-leave="handleBeforeLeave"
-      >
+      <tbody>
         <tr v-for="producto in filteredProductos" :key="producto.id">
           <td class="text-[14px] p-2">{{ producto.id }}</td>
           <td class="text-[14px] p-2">
-            <img :src="logo" class="rounded-lg" width="45" height="40" alt="Imagen de producto" />
+            <img :src="producto.imagen" class="rounded-lg" width="45" height="40" alt="Imagen de producto" />
           </td>
           <td class="text-[14px] p-2">{{ producto.nombre }}</td>
           <td class="text-[14px] p-2">{{ producto.descripcion }}</td>
@@ -145,7 +84,7 @@ function handleBeforeLeave(el) {
             </div>
           </td>
         </tr>
-      </transition-group>
+      </tbody>
     </table>
 
     <div v-if="filteredProductos.length === 0" class="text-center mt-10 font-bold text-2xl text-gray-500">
@@ -153,3 +92,20 @@ function handleBeforeLeave(el) {
     </div>
   </div>
 </template>
+
+<style scoped>
+.bg-semaforo-rojo {
+  background-color: #ff4d4f;
+  color: white;
+}
+
+.bg-semaforo-amarillo {
+  background-color: #ffec3d;
+  color: #000;
+}
+
+.bg-semaforo-verde {
+  background-color: #52c41a;
+  color: white;
+}
+</style>

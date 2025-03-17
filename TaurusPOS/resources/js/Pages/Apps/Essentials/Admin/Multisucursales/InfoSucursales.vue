@@ -92,6 +92,8 @@ const createBranch = () => {
         alert('Por favor completa todos los campos.');
     }
 };
+
+const searchQuery = ref('');
 </script>
 
 <template>
@@ -127,6 +129,7 @@ const createBranch = () => {
                             class="" />
                         <span class="material-symbols-rounded text-essentials-primary">travel_explore</span>
                     </div>
+                    
 
                     <!-- 
                      <a :href="route('essentials.admin.infoSucursal')">
@@ -187,7 +190,7 @@ const createBranch = () => {
                 </div>
 
                 <!-- formulario -->
-                <Productos />
+                <Productos :productos="productos" :searchQuery="searchQuery" />
             </main>
 
 

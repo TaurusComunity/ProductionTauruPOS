@@ -14,5 +14,3 @@ Route::prefix('essentials/admin')->group(function () {
         return Inertia::render('Apps/Essentials/Admin/Multisucursales/InfoSucursales');
     })->name('essentials.admin.infoSucursal');
 });
-
-// 3204070308
