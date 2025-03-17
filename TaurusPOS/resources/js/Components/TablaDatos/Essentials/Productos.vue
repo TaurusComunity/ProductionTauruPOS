@@ -94,7 +94,7 @@ function handleBeforeLeave(el) {
 
 <template>
   <div class="overflow-x-auto">
-    <table class="w-full border-collapse">
+    <table class="w-full border-collapse" id="tabla">
       <thead>
         <tr class="border border-secundary-light">
           <th class="p-2 text-left">PLU</th>

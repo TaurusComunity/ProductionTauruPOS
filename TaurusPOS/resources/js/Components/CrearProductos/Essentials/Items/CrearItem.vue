@@ -1,5 +1,5 @@
 <script setup>
-import { ref, computed, watch, onMounted } from 'vue'
+import { ref, computed, watch } from 'vue'
 
 // Refs para los inputs y la imagen
 const file = ref(null)
@@ -99,70 +99,70 @@ const resetImage = () => {
 
 // ✅ Función para obtener valor numérico correctamente formateado
 const obtenerNumero = (value) => {
-  if (!value) return 0
-  // ✅ Eliminar los puntos de formato y convertir a número
-  let valor = value.replace(/\./g, '').replace(',', '.')
-  return parseFloat(valor) || 0
+    if (!value) return 0
+    // ✅ Eliminar los puntos de formato y convertir a número
+    let valor = value.replace(/\./g, '').replace(',', '.')
+    return parseFloat(valor) || 0
 }
 
 // ✅ Computada para el precio final (actualiza en tiempo real)
 const precioFinal = computed(() => {
-  const precioNeto = obtenerNumero(form.value.precioNetoProducto)
-  const descuento = obtenerNumero(form.value.descuentoProducto)
-  const iva = obtenerNumero(form.value.ivaProducto)
+    const precioNeto = obtenerNumero(form.value.precioNetoProducto)
+    const descuento = obtenerNumero(form.value.descuentoProducto)
+    const iva = obtenerNumero(form.value.ivaProducto)
 
-  const precioConDescuento = precioNeto - descuento
-  const precioFinal = precioConDescuento + (precioConDescuento * (iva / 100))
+    const precioConDescuento = precioNeto - descuento
+    const precioFinal = precioConDescuento + (precioConDescuento * (iva / 100))
 
-  // ✅ Formato en pesos colombianos
-  return precioFinal.toLocaleString('es-CO', {
-    style: 'currency',
-    currency: 'COP',
-    minimumFractionDigits: 0,
-    maximumFractionDigits: 0
-  })
+    // ✅ Formato en pesos colombianos
+    return precioFinal.toLocaleString('es-CO', {
+        style: 'currency',
+        currency: 'COP',
+        minimumFractionDigits: 0,
+        maximumFractionDigits: 0
+    })
 })
 
 // ✅ Función para validar y formatear números mientras escribes
 const validarNumero = (event, field) => {
-  let value = event.target.value
+    let value = event.target.value
 
-  // ✅ Eliminar caracteres no numéricos (solo números)
-  value = value.replace(/[^\d]/g, '')
+    // ✅ Eliminar caracteres no numéricos (solo números)
+    value = value.replace(/[^\d]/g, '')
 
-  // ✅ Limitar el valor a 16 dígitos
-  if (value.length > 16) {
-    value = value.slice(0, 16)
-  }
+    // ✅ Limitar el valor a 16 dígitos
+    if (value.length > 16) {
+        value = value.slice(0, 16)
+    }
 
-  // ✅ Si el valor está vacío → establecer en 0
-  if (value === '') {
-    form.value[field] = ''
-    return
-  }
+    // ✅ Si el valor está vacío → establecer en 0
+    if (value === '') {
+        form.value[field] = ''
+        return
+    }
 
-  // ✅ Limitar dentro de rango
-  let numberValue = parseFloat(value)
-  if (isNaN(numberValue)) {
-    form.value[field] = ''
-    return
-  }
+    // ✅ Limitar dentro de rango
+    let numberValue = parseFloat(value)
+    if (isNaN(numberValue)) {
+        form.value[field] = ''
+        return
+    }
 
-  if (numberValue > 999999999999999) numberValue = 999999999999999
-  if (numberValue < 0) numberValue = 0
+    if (numberValue > 999999999999999) numberValue = 999999999999999
+    if (numberValue < 0) numberValue = 0
 
-  // ✅ Asignar valor formateado automáticamente
-  form.value[field] = numberValue.toLocaleString('es-CO', {
-    minimumFractionDigits: 0,
-    maximumFractionDigits: 0
-  })
+    // ✅ Asignar valor formateado automáticamente
+    form.value[field] = numberValue.toLocaleString('es-CO', {
+        minimumFractionDigits: 0,
+        maximumFractionDigits: 0
+    })
 }
 
 // ✅ Actualizar automáticamente los valores para la computada
 watch(form, () => {
-  obtenerNumero(form.value.precioNetoProducto)
-  obtenerNumero(form.value.descuentoProducto)
-  obtenerNumero(form.value.ivaProducto)
+    obtenerNumero(form.value.precioNetoProducto)
+    obtenerNumero(form.value.descuentoProducto)
+    obtenerNumero(form.value.ivaProducto)
 }, { deep: true })
 </script>
 
@@ -286,8 +286,9 @@ watch(form, () => {
                     <div class=" mt-[5px] w-[50%]">
                         <p class="my-[5px] text-[16px]">Cantidad en Stock:</p>
                         <div class="input-insertar w-full">
-                            <input type="text" min="0" max="999999999999999" placeholder="¿Cuantos tienes disponibles?"  :value="form.stockProducto"
-                            @input="validarNumero($event, 'stockProducto')" name="stockProducto">
+                            <input type="text" min="0" max="999999999999999" placeholder="¿Cuantos tienes disponibles?"
+                                :value="form.stockProducto" @input="validarNumero($event, 'stockProducto')"
+                                name="stockProducto">
                             <span class="material-symbols-rounded text-essentials-primary">pin</span>
                         </div>
                     </div>
@@ -297,8 +298,9 @@ watch(form, () => {
                     <div class=" mt-[5px] w-[50%]">
                         <p class="my-[5px] text-[16px]">Cantidad:</p>
                         <div class="input-insertar w-full">
-                            <input type="text" min="0" max="999999999999999" placeholder="Ejemplo: 400"  :value="form.cantidadProducto"
-                            @input="validarNumero($event, 'cantidadProducto')" name="cantidadProducto">
+                            <input type="text" min="0" max="999999999999999" placeholder="Ejemplo: 400"
+                                :value="form.cantidadProducto" @input="validarNumero($event, 'cantidadProducto')"
+                                name="cantidadProducto">
                             <span class="material-symbols-rounded text-essentials-primary">pin</span>
                         </div>
                     </div>
@@ -334,8 +336,9 @@ watch(form, () => {
                     <div class=" mt-[5px] w-[50%]">
                         <p class="my-[5px] text-[16px]">Precio neto:</p>
                         <div class="input-insertar w-full">
-                            <input type="text" min="0" max="999999999999999" placeholder="Precio comprado" v :value="form.precioNetoProducto"
-                            @input="validarNumero($event, 'precioNetoProducto')" name="precioNetoProducto">
+                            <input type="text" min="0" max="999999999999999" placeholder="Precio comprado" v
+                                :value="form.precioNetoProducto" @input="validarNumero($event, 'precioNetoProducto')"
+                                name="precioNetoProducto">
                             <span class="material-symbols-rounded text-essentials-primary">format_italic</span>
                         </div>
                     </div>
@@ -345,8 +348,9 @@ watch(form, () => {
                     <div class=" mt-[5px] w-[50%]">
                         <p class="my-[5px] text-[16px]">Descuento:</p>
                         <div class="input-insertar w-full">
-                            <input type="text" min="0" max="999999999999999" placeholder="Escribe el monto"  :value="form.descuentoProducto"
-                            @input="validarNumero($event, 'descuentoProducto')" name="descuentoProducto">
+                            <input type="text" min="0" max="999999999999999" placeholder="Escribe el monto"
+                                :value="form.descuentoProducto" @input="validarNumero($event, 'descuentoProducto')"
+                                name="descuentoProducto">
                             <span class="material-symbols-rounded text-essentials-primary">pin</span>
                         </div>
                     </div>
@@ -355,9 +359,9 @@ watch(form, () => {
                     <div class=" mt-[5px] w-[50%]">
                         <p class="my-[5px] text-[16px]">IVA %:</p>
                         <div class="input-insertar w-full">
-                            <input type="text" min="0" max="999999999999999" placeholder="Si tiene ICUI E IVA ingresalo asi: (ICUI+IVA)"
-                                v-model="form.ivaProducto" @input="formatearNumeroInput($event, 'ivaProducto')"
-                                name="ivaProducto">
+                            <input type="text" min="0" max="999999999999999"
+                                placeholder="Si tiene ICUI E IVA ingresalo asi: (ICUI+IVA)" v-model="form.ivaProducto"
+                                @input="formatearNumeroInput($event, 'ivaProducto')" name="ivaProducto">
                             <span class="material-symbols-rounded text-essentials-primary">pin</span>
                         </div>
                     </div>
@@ -451,7 +455,7 @@ watch(form, () => {
                 <p class="flex items-center gap-2"><span
                         class="material-symbols-rounded text-[15px] text-essentials-primary">square_foot</span>
                     <span>{{ form.cantidadProducto || 'Unidad' }}</span><span>{{ form.unidadMedidaProducto || 'medida'
-                        }}</span>
+                    }}</span>
 
                 </p>
                 <p class="flex items-center gap-2"><span

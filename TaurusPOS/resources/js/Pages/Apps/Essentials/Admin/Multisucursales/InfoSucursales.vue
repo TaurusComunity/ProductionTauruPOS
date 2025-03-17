@@ -1,11 +1,9 @@
 <script>
 import { Head } from '@inertiajs/vue3';
 import Sidebar from '@/Components/Sidebar/Essentials/Sidebar.vue';
-import BarraCalendario from '@/Components/BarraCalendario/BarraCalendario.vue';
-import DetallesPlan from '@/Components/Dashboard/DetallesPlan.vue';
 import SaludoOpciones from '@/Components/header/Essentials/SaludoOpciones.vue';
-import CardHistorial from '@/Components/Dashboard/Essentials/CardHistorial.vue';
 import Productos from '@/Components/TablaDatos/Essentials/Productos.vue';
+import ExportarExcel from '@/components/ExportarExcel/ExportarExcel.vue';
 
 
 
@@ -125,19 +123,18 @@ const searchQuery = ref('');
                 <div class="titulo-input-btn mt-4 flex justify-between items-center gap-5">
                     <h4 class="font-semibold text-[25px]">Gestion de sucursal</h4>
                     <div class="input-buscador">
-                        <input v-model="searchQuery" type="search" placeholder="Buscar producto..."
-                            class="" />
+                        <input v-model="searchQuery" type="search" placeholder="Buscar producto..." class="" />
                         <span class="material-symbols-rounded text-essentials-primary">travel_explore</span>
                     </div>
-                    
 
-                  
-                     <a :href="route('essentials.admin.crearItem')">
-                            <button class="btn-essentials-secundary">Agregar items a esta bodega<span
+
+
+                    <a :href="route('essentials.admin.crearItem')">
+                        <button class="btn-essentials-secundary">Agregar items a esta bodega<span
                                 class="material-symbols-rounded"> outbound </span></button>
-                        </a>
-                    
-                    
+                    </a>
+
+
 
                 </div>
 
@@ -184,6 +181,8 @@ const searchQuery = ref('');
 
                 </div>
 
+                <ExportarExcel idTabla="tabla" nombreArchivo="Movimientos_Almacenados"
+                    titulo="Movimientos almacenados" />
                 <!-- formulario -->
                 <Productos :searchQuery="searchQuery" />
             </main>
