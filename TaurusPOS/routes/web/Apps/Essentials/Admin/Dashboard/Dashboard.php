@@ -8,7 +8,3 @@ Route::prefix('essentials/admin')->group(function () {
         return Inertia::render('Apps/Essentials/Admin/Dashboard/Dashboard');
     })->name('essentials.admin.dashboard');
 });
-
-Route::get('/swap', function () {
-    return Inertia::render('Swap');
-})->name('swap');

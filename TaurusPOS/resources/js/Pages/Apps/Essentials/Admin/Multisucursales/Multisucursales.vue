@@ -1,10 +1,7 @@
 <script>
 import { Head } from '@inertiajs/vue3';
 import Sidebar from '@/Components/Sidebar/Essentials/Sidebar.vue';
-import BarraCalendario from '@/Components/BarraCalendario/BarraCalendario.vue';
-import DetallesPlan from '@/Components/Dashboard/DetallesPlan.vue';
 import SaludoOpciones from '@/Components/header/Essentials/SaludoOpciones.vue';
-import CardHistorial from '@/Components/Dashboard/Essentials/CardHistorial.vue';
 import Modal from '@/Components/Modales/Essentials/Modal.vue';
 
 
@@ -143,10 +140,10 @@ const createBranch = () => {
                                 <p>Sucursal ID: <span>"Id registrado en BD"</span></p>
                             </div>
                         </div>
-                       
-                         <a :href="route('essentials.admin.infoSucursal')">
+
+                        <a :href="route('essentials.admin.infoSucursal')">
                             <button class="btn-essentials-secundary">Ir a mi sucursal <span
-                                class="material-symbols-rounded"> outbound </span></button>
+                                    class="material-symbols-rounded"> outbound </span></button>
                         </a>
 
                     </div>
