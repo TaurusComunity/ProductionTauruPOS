@@ -33,15 +33,15 @@ import logo from '@images/logoTC.svg'
 
 
         <!-- Botón para Swap -->
-        <div :class="currentRoute === 'essentials.admin.gastos' ? 'btn-link-essentials' : 'btn-link-disable'">
-          <a :href="route('essentials.admin.gastos')" class="bg-transparent flex items-center justify-center">
+        <div :class="currentRoute === 'swap' ? 'btn-link-essentials' : 'btn-link-disable'">
+          <a :href="route('swap')" class="bg-transparent flex items-center justify-center">
             <span class="material-symbols-rounded"> savings </span>
           </a>
         </div>
 
         <!-- Botón para Swap -->
-        <div :class="currentRoute === 'swap' ? 'btn-link-essentials' : 'btn-link-disable'">
-          <a :href="route('swap')" class="bg-transparent flex items-center justify-center">
+        <div :class="currentRoute === 'essentials.admin.gastos' ? 'btn-link-essentials' : 'btn-link-disable'">
+          <a :href="route('essentials.admin.gastos')" class="bg-transparent flex items-center justify-center">
             <span class="material-symbols-rounded"> monitoring </span>
           </a>
         </div>
@@ -68,8 +68,8 @@ import logo from '@images/logoTC.svg'
         </div>
         
         <!-- Botón para Swap -->
-        <div :class="currentRoute === 'swap' ? 'btn-link-essentials' : 'btn-link-disable'">
-          <a :href="route('swap')" class="bg-transparent flex items-center justify-center">
+        <div :class="currentRoute === 'essentials.admin.etiquetado' ? 'btn-link-essentials' : 'btn-link-disable'">
+          <a :href="route('essentials.admin.etiquetado')" class="bg-transparent flex items-center justify-center">
             <span class="material-symbols-rounded"> barcode_scanner </span>
           </a>
         </div>
