@@ -1,10 +1,10 @@
 <script setup>
-import { ref, watch, computed, onMounted } from 'vue';
+import { ref, computed, watch, onMounted } from 'vue'
 
 // Refs para los inputs y la imagen
-const file = ref(null);
-const fileName = ref('');
-const imageUrl = ref('');
+const file = ref(null)
+const fileName = ref('')
+const imageUrl = ref('')
 
 // Datos del formulario
 const form = ref({
@@ -23,108 +23,148 @@ const form = ref({
     ivaProducto: '',
     loteProducto: '',
     rsaProducto: '',
-    vencimientoProducto: '',
+    vencimientoProducto: ''
 })
 
-// ✅ Función para capitalizar la primera letra
-const capitalizeFirstLetter = (str) => {
-    return str ? str.charAt(0).toUpperCase() + str.slice(1).toLowerCase() : ''
+// ✅ Límite de caracteres para el nombre del producto
+const maxCaracteres = 100
+
+
+// ✅ Función para capitalizar cada palabra
+const capitalizeWords = (str) => {
+    return str
+        .split(' ') // ✅ Separa las palabras por espacio
+        .filter(word => word) // ✅ Elimina espacios extras entre palabras
+        .map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase()) // ✅ Capitaliza cada palabra
+        .join(' ') // ✅ Une las palabras con un espacio
 }
 
-// ✅ Función para actualizar las previsualizaciones
-const updatePreview = () => {
-    // Recorremos las propiedades del objeto y capitalizamos el valor
-    for (const key in form.value) {
-        if (typeof form.value[key] === 'string') {
-            form.value[key] = capitalizeFirstLetter(form.value[key].trim())
-        }
+// ✅ Función para capitalizar al salir del campo
+const handleBlur = (field) => {
+    if (typeof form.value[field] === 'string') {
+        form.value[field] = capitalizeWords(form.value[field].trim())
+    }
+}
+
+// ✅ Función para el conteo y límite de caracteres (permite espacios)
+const handleInput = (event, field) => {
+    let value = event.target.value
+
+    // ✅ Permitir espacios y cortar si excede el límite de caracteres
+    if (value.length > maxCaracteres) {
+        form.value[field] = value.slice(0, maxCaracteres)
+    } else {
+        form.value[field] = value
     }
 }
 
 // ✅ Función para subir archivo
 const handleImageUpload = (event) => {
-  const selectedFile = event.target.files[0]
+    const selectedFile = event.target.files[0]
 
-  if (!selectedFile) return
+    if (!selectedFile) return
 
-  const maxSize = 3 * 1024 * 1024 // 3MB
-  const validExtensions = ['image/jpeg', 'image/png', 'image/gif']
+    const maxSize = 3 * 1024 * 1024 // 3MB
+    const validExtensions = ['image/jpeg', 'image/png', 'image/gif']
 
-  if (selectedFile.size > maxSize) {
-    alert('El archivo es demasiado grande. Máximo 3MB.')
-    file.value = null
-    return
-  }
+    if (selectedFile.size > maxSize) {
+        alert('El archivo es demasiado grande. Máximo 3MB.')
+        file.value = null
+        return
+    }
 
-  if (!validExtensions.includes(selectedFile.type)) {
-    alert('Formato no permitido. Sube una imagen en JPG, PNG o GIF.')
-    file.value = null
-    return
-  }
+    if (!validExtensions.includes(selectedFile.type)) {
+        alert('Formato no permitido. Sube una imagen en JPG, PNG o GIF.')
+        file.value = null
+        return
+    }
 
-  const reader = new FileReader()
-  reader.onload = () => {
-    imageUrl.value = reader.result
-  }
-  reader.readAsDataURL(selectedFile)
+    const reader = new FileReader()
+    reader.onload = () => {
+        imageUrl.value = reader.result
+    }
+    reader.readAsDataURL(selectedFile)
 
-  file.value = selectedFile
-  fileName.value = selectedFile.name
+    file.value = selectedFile
+    fileName.value = selectedFile.name
 }
 
 // ✅ Función para cancelar archivo
 const resetImage = () => {
-  file.value = null
-  fileName.value = ''
-  imageUrl.value = ''
+    file.value = null
+    fileName.value = ''
+    imageUrl.value = ''
 }
+
 
 // ✅ Función para obtener valor numérico correctamente formateado
 const obtenerNumero = (value) => {
-    if (!value) return 0
-    let valor = value.replace(/\./g, '').replace(',', '.')
-    return parseFloat(valor) || 0
+  if (!value) return 0
+  // ✅ Eliminar los puntos de formato y convertir a número
+  let valor = value.replace(/\./g, '').replace(',', '.')
+  return parseFloat(valor) || 0
 }
 
-// ✅ Computada para el precio final
+// ✅ Computada para el precio final (actualiza en tiempo real)
 const precioFinal = computed(() => {
-    const precioNeto = obtenerNumero(form.value.precioNetoProducto)
-    const descuento = obtenerNumero(form.value.descuentoProducto)
-    const iva = obtenerNumero(form.value.ivaProducto)
+  const precioNeto = obtenerNumero(form.value.precioNetoProducto)
+  const descuento = obtenerNumero(form.value.descuentoProducto)
+  const iva = obtenerNumero(form.value.ivaProducto)
 
-    const precioConDescuento = precioNeto - descuento
-    const precioFinal = precioConDescuento + (precioConDescuento * (iva / 100))
+  const precioConDescuento = precioNeto - descuento
+  const precioFinal = precioConDescuento + (precioConDescuento * (iva / 100))
 
-    return precioFinal.toLocaleString('es-CO', {
-        minimumFractionDigits: 0,
-        maximumFractionDigits: 0
-    })
+  // ✅ Formato en pesos colombianos
+  return precioFinal.toLocaleString('es-CO', {
+    style: 'currency',
+    currency: 'COP',
+    minimumFractionDigits: 0,
+    maximumFractionDigits: 0
+  })
 })
 
-// ✅ Función para formatear números en el input
-const formatearNumeroInput = (event) => {
-    let value = event.target.value.replace(/\./g, '')
-    let numberValue = parseFloat(value)
+// ✅ Función para validar y formatear números mientras escribes
+const validarNumero = (event, field) => {
+  let value = event.target.value
 
-    if (isNaN(numberValue)) {
-        event.target.value = ''
-        return
-    }
+  // ✅ Eliminar caracteres no numéricos (solo números)
+  value = value.replace(/[^\d]/g, '')
 
-    event.target.value = numberValue.toLocaleString('es-CO', {
-        minimumFractionDigits: 0,
-        maximumFractionDigits: 0
-    })
+  // ✅ Limitar el valor a 16 dígitos
+  if (value.length > 16) {
+    value = value.slice(0, 16)
+  }
+
+  // ✅ Si el valor está vacío → establecer en 0
+  if (value === '') {
+    form.value[field] = ''
+    return
+  }
+
+  // ✅ Limitar dentro de rango
+  let numberValue = parseFloat(value)
+  if (isNaN(numberValue)) {
+    form.value[field] = ''
+    return
+  }
+
+  if (numberValue > 999999999999999) numberValue = 999999999999999
+  if (numberValue < 0) numberValue = 0
+
+  // ✅ Asignar valor formateado automáticamente
+  form.value[field] = numberValue.toLocaleString('es-CO', {
+    minimumFractionDigits: 0,
+    maximumFractionDigits: 0
+  })
 }
 
-// Actualiza la previsualización automáticamente
-watch(form, updatePreview, { deep: true });
-
-onMounted(() => {
-    updatePreview();
-});
+// ✅ Actualizar automáticamente los valores para la computada
+watch(form, () => {
+  obtenerNumero(form.value.precioNetoProducto)
+  obtenerNumero(form.value.descuentoProducto)
+  obtenerNumero(form.value.ivaProducto)
+}, { deep: true })
 </script>
-
 
 <template>
 
@@ -173,17 +213,26 @@ onMounted(() => {
                     <div class=" mt-[5px] w-[50%]">
                         <p class="my-[5px] text-[16px]">PLU:</p>
                         <div class="input-insertar w-full">
-                            <input type="number" placeholder="Ponle identidad a tu item" v-model="form.plu">
+                            <input type="text" min="0" max="999999999999999" placeholder="Ponle identidad a tu item"
+                                v-model="form.pluProducto">
                             <span class="material-symbols-rounded text-essentials-primary">pin</span>
                         </div>
                     </div>
 
                     <div class=" mt-[5px] w-[50%]">
-                        <p class="my-[5px] text-[16px]">Nombre:</p>
-                        <div class="input-insertar w-full">
+                        <div class="contador-input flex items-center justify-between">
+                            <p class="my-[5px] text-[16px]">Nombre:</p>
+                            <p class="text-right text-[10px] text-gray-500">
+                                {{ form.nombreProducto.length }} / {{ maxCaracteres }}
+                            </p>
+                        </div>
+
+                        <div class="input-insertar w-full relative">
                             <input type="text" placeholder="Escribe su nombre" v-model="form.nombreProducto"
+                                @input="handleInput($event, 'nombreProducto')" @blur="handleBlur('nombreProducto')"
                                 name="nombreProducto">
                             <span class="material-symbols-rounded text-essentials-primary">format_italic</span>
+
                         </div>
                     </div>
                 </div>
@@ -192,7 +241,7 @@ onMounted(() => {
                     <div class="w-[50%] mt-[5px]">
                         <p class="my-[5px] text-[16px]">Categoría:</p>
                         <div class="custom-select ">
-                            <select id="categoriaProducto" name="categoriaProducto">
+                            <select v-model="form.categoriaProducto" name="categoriaProducto">
                                 <optgroup label="Selecciona una categoria">Categoria</optgroup>
                                 <option value="sub1">Categoría 1</option>
                                 <option value="sub2">Categoría 2</option>
@@ -206,7 +255,7 @@ onMounted(() => {
                     <div class="w-[50%] mt-[5px]">
                         <p class="my-[5px] text-[16px]">Subcategoría:</p>
                         <div class="custom-select ">
-                            <select id="subcategoriaProducto" name="subcategoriaProducto">
+                            <select v-model="form.subcategoriaProducto" name="subcategoriaProducto">
                                 <optgroup label="Selecciona una subcategoria">Subcategoria</optgroup>
                                 <option value="sub1">Subcategoría 1</option>
                                 <option value="sub2">Subcategoría 2</option>
@@ -220,10 +269,16 @@ onMounted(() => {
 
                 <div class="mt-[5px] flex justify-between gap-3 w-full">
                     <div class=" mt-[5px] w-[50%]">
-                        <p class="my-[5px] text-[16px]">Descripción:</p>
+                        <div class="contador-input flex items-center justify-between">
+                            <p class="my-[5px] text-[16px]">Descripción:</p>
+                            <p class="text-right text-[10px] text-gray-500">
+                                {{ form.descripcionProducto.length }} / {{ maxCaracteres }}
+                            </p>
+                        </div>
                         <div class="input-insertar w-full">
-                            <input type="text" placeholder="Describe a (nombre)" id="descripcionProducto"
-                                name="descripcionProducto">
+                            <input type="text" placeholder="Describe tu producto" v-model="form.descripcionProducto"
+                                @input="handleInput($event, 'descripcionProducto')"
+                                @blur="handleBlur('descripcionProducto')" name="descripcionProducto">
                             <span class="material-symbols-rounded text-essentials-primary">format_italic</span>
                         </div>
                     </div>
@@ -231,8 +286,8 @@ onMounted(() => {
                     <div class=" mt-[5px] w-[50%]">
                         <p class="my-[5px] text-[16px]">Cantidad en Stock:</p>
                         <div class="input-insertar w-full">
-                            <input type="number" placeholder="¿Cuantos tienes disponibles?" id="stockProducto"
-                                name="stockProducto">
+                            <input type="text" min="0" max="999999999999999" placeholder="¿Cuantos tienes disponibles?"  :value="form.stockProducto"
+                            @input="validarNumero($event, 'stockProducto')" name="stockProducto">
                             <span class="material-symbols-rounded text-essentials-primary">pin</span>
                         </div>
                     </div>
@@ -242,8 +297,8 @@ onMounted(() => {
                     <div class=" mt-[5px] w-[50%]">
                         <p class="my-[5px] text-[16px]">Cantidad:</p>
                         <div class="input-insertar w-full">
-                            <input type="number" placeholder="Ejemplo: 400" id="cantidadProducto"
-                                name="cantidadProducto">
+                            <input type="text" min="0" max="999999999999999" placeholder="Ejemplo: 400"  :value="form.cantidadProducto"
+                            @input="validarNumero($event, 'cantidadProducto')" name="cantidadProducto">
                             <span class="material-symbols-rounded text-essentials-primary">pin</span>
                         </div>
                     </div>
@@ -251,7 +306,7 @@ onMounted(() => {
                     <div class="w-[50%] mt-[5px]">
                         <p class="my-[5px] text-[16px]">Unidad de medida:</p>
                         <div class="custom-select ">
-                            <select id="unidadMedidaProducto" name="unidadMedidaProducto">
+                            <select v-model="form.unidadMedidaProducto" name="unidadMedidaProducto">
                                 <optgroup label="Selecciona una subcategoria">Categoria</optgroup>
                                 <option value="Unidades">Unidades</option>
                                 <option value="Onzas">Onzas</option>
@@ -270,7 +325,8 @@ onMounted(() => {
                     <div class=" mt-[5px] w-[50%]">
                         <p class="my-[5px] text-[16px]">Marca:</p>
                         <div class="input-insertar w-full">
-                            <input type="text" placeholder="Ejemplo: Coca cola" id="marcaProducto" name="marcaProducto">
+                            <input type="text" placeholder="Ejemplo: Coca cola" v-model="form.marcaProducto"
+                                name="marcaProducto">
                             <span class="material-symbols-rounded text-essentials-primary">format_italic</span>
                         </div>
                     </div>
@@ -278,8 +334,8 @@ onMounted(() => {
                     <div class=" mt-[5px] w-[50%]">
                         <p class="my-[5px] text-[16px]">Precio neto:</p>
                         <div class="input-insertar w-full">
-                            <input type="number" placeholder="Precio comprado" id="precioNetoProducto"
-                                name="precioNetoProducto">
+                            <input type="text" min="0" max="999999999999999" placeholder="Precio comprado" v :value="form.precioNetoProducto"
+                            @input="validarNumero($event, 'precioNetoProducto')" name="precioNetoProducto">
                             <span class="material-symbols-rounded text-essentials-primary">format_italic</span>
                         </div>
                     </div>
@@ -289,8 +345,8 @@ onMounted(() => {
                     <div class=" mt-[5px] w-[50%]">
                         <p class="my-[5px] text-[16px]">Descuento:</p>
                         <div class="input-insertar w-full">
-                            <input type="number" placeholder="Escribe el monto" id="descuentoProducto"
-                                name="descuentoProducto">
+                            <input type="text" min="0" max="999999999999999" placeholder="Escribe el monto"  :value="form.descuentoProducto"
+                            @input="validarNumero($event, 'descuentoProducto')" name="descuentoProducto">
                             <span class="material-symbols-rounded text-essentials-primary">pin</span>
                         </div>
                     </div>
@@ -299,8 +355,9 @@ onMounted(() => {
                     <div class=" mt-[5px] w-[50%]">
                         <p class="my-[5px] text-[16px]">IVA %:</p>
                         <div class="input-insertar w-full">
-                            <input type="number" placeholder="Si tiene ICUI E IVA ingresalo asi: (ICUI+IVA)"
-                                id="ivaProducto" name="ivaProducto">
+                            <input type="text" min="0" max="999999999999999" placeholder="Si tiene ICUI E IVA ingresalo asi: (ICUI+IVA)"
+                                v-model="form.ivaProducto" @input="formatearNumeroInput($event, 'ivaProducto')"
+                                name="ivaProducto">
                             <span class="material-symbols-rounded text-essentials-primary">pin</span>
                         </div>
                     </div>
@@ -310,7 +367,8 @@ onMounted(() => {
                     <div class=" mt-[5px] w-[50%]">
                         <p class="my-[5px] text-[16px]">Lote:</p>
                         <div class="input-insertar w-full">
-                            <input type="text" placeholder="Ingresa Lote" id="loteProducto" name="loteProducto">
+                            <input type="text" placeholder="Ingresa Lote" iv-model="form.loteProducto"
+                                name="loteProducto">
                             <span class="material-symbols-rounded text-essentials-primary">format_italic</span>
                         </div>
                     </div>
@@ -318,7 +376,8 @@ onMounted(() => {
                     <div class=" mt-[5px] w-[50%]">
                         <p class="my-[5px] text-[16px]">Registro Sanitario :</p>
                         <div class="input-insertar w-full">
-                            <input type="text" placeholder="RSA de cada producto" id="rsaProducto" name="rsaProducto">
+                            <input type="text" placeholder="RSA de cada producto" v-model="form.rsaProducto"
+                                name="rsaProducto">
                             <span class="material-symbols-rounded text-essentials-primary">format_italic</span>
                         </div>
                     </div>
@@ -328,7 +387,8 @@ onMounted(() => {
                     <div class=" mt-[5px] w-[50%]">
                         <p class="my-[5px] text-[16px]">Fecha vencimiento:</p>
                         <div class="input-insertar w-full">
-                            <input type="date" placeholder="" id="vencimientoProducto" name="vencimientoProducto">
+                            <input type="date" placeholder="" v-model="form.vencimientoProducto"
+                                name="vencimientoProducto">
                             <span class="material-symbols-rounded text-essentials-primary">event</span>
                         </div>
                     </div>
@@ -336,7 +396,7 @@ onMounted(() => {
                     <div class="w-[50%] mt-[5px]">
                         <p class="my-[5px] text-[16px]">Proveedor:</p>
                         <div class="custom-select ">
-                            <select id="proveedorProducto" name="proveedorProducto">
+                            <select v-model="form.proveedorProducto" name="proveedorProducto">
                                 <optgroup label="Selecciona un proveedor">Proveedor</optgroup>
                                 <option value="NA">No aplica</option>
                                 <option value="Jhoann Zamudio">Jhoann Zamudio</option>
@@ -365,9 +425,9 @@ onMounted(() => {
             <div class=" text-blanco  my-[15px]">
                 <div class="flex justify-between items-center text-[25px] font-medium">
                     <p>{{ form.nombreProducto || 'Nombre' }}</p>
-                    <p id="pluPreview">Identificador PLU</p>
+                    <p>{{ form.pluProducto || 'PLU' }}</p>
                 </div>
-                <p class="text-secundary-light text-4" id="descripcionProductoPreview">Descripcion</p>
+                <p class="text-secundary-light text-4">{{ form.descripcionProducto || 'Descripción' }}</p>
             </div>
 
             <div class="text-blanco flex items-center justify-between text-[15px] my-2">
@@ -375,31 +435,32 @@ onMounted(() => {
                     <span class="material-symbols-rounded text-[15px] text-essentials-primary">
                         category
                     </span>
-                    <span id="categoriaProductoPreview">Categoria</span>
+                    <span>{{ form.categoriaProducto || 'Categoría' }}</span>
 
                 </p>
                 <p class="flex items-center gap-2"><span
                         class="material-symbols-rounded text-[15px] text-essentials-primary">view_object_track</span>
-                    <span id="subcategoriaProductoPreview">Subcategoria</span>
+                    <span>{{ form.subcategoriaProducto || 'Subcategoría' }}</span>
 
                 </p>
-                <p class="flex items-center gap-2 cantidad" id="stockProductoPreview">20<span
+                <p class="flex items-center gap-2 cantidad">{{ form.stockProducto || '0' }}<span
                         class="cantidad">Unidades</span></p>
             </div>
 
             <div class="text-blanco flex items-center justify-between text-[15px] my-2">
                 <p class="flex items-center gap-2"><span
                         class="material-symbols-rounded text-[15px] text-essentials-primary">square_foot</span>
-                    <span id="cantidadProductoPreview">Unidad</span><span id="unidadMedidaProductoPreview">Medida</span>
+                    <span>{{ form.cantidadProducto || 'Unidad' }}</span><span>{{ form.unidadMedidaProducto || 'medida'
+                        }}</span>
 
                 </p>
                 <p class="flex items-center gap-2"><span
                         class="material-symbols-rounded text-[15px] text-essentials-primary">person</span>
-                    <span id="proveedorProductoPreview">Proveedor</span>
+                    <span>{{ form.proveedorProducto || 'Proveedor' }}</span>
                 </p>
                 <p class="flex items-center gap-2"><span
                         class="material-symbols-rounded text-[15px] text-essentials-primary">verified</span>
-                    <span id="marcaProductoPreview">Marca</span>
+                    <span>{{ form.marcaProducto || 'Marca' }}</span>
                 </p>
             </div>
 
@@ -408,15 +469,15 @@ onMounted(() => {
                     <span class="material-symbols-rounded text-[15px] text-essentials-primary">
                         payments
                     </span>
-                    <span id="precioNetoProductoPreview">Precio neto</span>
+                    <span>{{ form.precioNetoProducto || 'Precio neto' }}</span>
                 </p>
                 <p class="flex items-center gap-2"><span
                         class="material-symbols-rounded text-[15px] text-essentials-primary">remove</span>
-                    <span id="descuentoProductoPreview">Descuento</span>
+                    <span>{{ form.descuentoProducto || 'Descuento' }}</span>
                 </p>
                 <p class="flex items-center gap-2"><span
                         class="material-symbols-rounded text-[15px] text-essentials-primary">percent</span>
-                    <span id="ivaProductoPreview">IVA + ICUI</span>
+                    <span>{{ form.ivaProducto || 'IVA + ICUI' }}</span>
                 </p>
             </div>
 
@@ -425,15 +486,15 @@ onMounted(() => {
                     <span class="material-symbols-rounded text-[15px] text-essentials-primary">
                         table_convert
                     </span>
-                    <span id="loteProductoPreview">Lote</span>
+                    <span>{{ form.loteProducto || 'Lote' }}</span>
                 </p>
                 <p class="flex items-center gap-2"><span
                         class="material-symbols-rounded text-[15px] text-essentials-primary">news</span>
-                    <span id="rsaProductoPreview">Registro Sanitario</span>
+                    <span>{{ form.rsaProducto || 'Registro Sanitario' }}</span>
                 </p>
                 <p class="flex items-center gap-2"><span
                         class="material-symbols-rounded text-[15px] text-essentials-primary">event_busy</span>
-                    <span id="vencimientoProductoPreview">Fecha vencimiento</span>
+                    <span>{{ form.vencimientoProducto || 'Vencimiento' }}</span>
                 </p>
             </div>
 
@@ -443,10 +504,8 @@ onMounted(() => {
                     <p>Activo</p>
                 </div>
                 <p class="flex items-center gap-2 text-[40px]">
-                    <span class="material-symbols-rounded text-[40px] text-essentials-primary">
-                        attach_money
-                    </span>
-                    <span id="precioFinalPreview">0,0</span>
+
+                    <span>{{ precioFinal }} COP</span>
                 </p>
             </div>
         </div>
