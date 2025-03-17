@@ -426,23 +426,43 @@ body {
   text-align: center;
 }
 
-.input {
+.input-insertar {
   display: flex;
   border: 2px solid var(--secundary_light);
   border-radius: 8px;
   color: var(--secundary_light);
   padding: 5px 10px;
-  width: 50%;
+  width: 100%;
   justify-content: space-between;
   align-items: center;
 }
 
-.input input {
+.input-insertar input {
   width: 100%;
   background-color: var(--mono_negro);
 }
 
-.input input:focus {
+.input-insertar input:focus {
+  outline: none;
+}
+
+.input-buscador {
+  display: flex;
+  border: 2px solid var(--secundary_light);
+  border-radius: 8px;
+  color: var(--secundary_light);
+  padding: 5px 10px;
+  width: 60%;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.input-buscador input {
+  width: 100%;
+  background-color: var(--mono_negro);
+}
+
+.input-buscador input:focus {
   outline: none;
 }
 

@@ -1,7 +1,7 @@
 <template>
     <div class="h-[100vh] w-[60px] flex items-center p-[20px]">
       <aside class="w-[60px] flex justify-center flex-col gap-2 items-center bg-secundary-default p-2 rounded-full">
-        <div class="gota h-12 w-12 shadow-essentials bg-essentials-primary rounded-full"></div>
+        <div class="gota h-12 w-12 shadow-essentials bg-essentials-primary rounded-full z-10"></div>
 
   
         <!-- Botón para Dashboard -->
@@ -12,8 +12,8 @@
         </div>
   
         <!-- Botón para Swap -->
-        <div :class="currentRoute === 'swap' ? 'btn-link-essentials' : 'btn-link-disable'">
-          <a :href="route('swap')" class="bg-transparent flex items-center justify-center">
+        <div :class="currentRoute === 'essentials.admin.multisucursales' ? 'btn-link-essentials' : 'btn-link-disable'">
+          <a :href="route('essentials.admin.multisucursales')" class="bg-transparent flex items-center justify-center">
             <span class="material-symbols-rounded"> swap_horiz </span>
           </a>
         </div>
