@@ -75,8 +75,8 @@ import logo from '@images/logoTC.svg'
         </div>
 
         <!-- Botón para Swap -->
-        <div :class="currentRoute === 'swap' ? 'btn-link-essentials' : 'btn-link-disable'">
-          <a :href="route('swap')" class="bg-transparent flex items-center justify-center">
+        <div :class="currentRoute === 'essentials.admin.generadorQrs' ? 'btn-link-essentials' : 'btn-link-disable'">
+          <a :href="route('essentials.admin.generadorQrs')" class="bg-transparent flex items-center justify-center">
             <span class="material-symbols-rounded"> qr_code_2 </span>
           </a>
         </div>

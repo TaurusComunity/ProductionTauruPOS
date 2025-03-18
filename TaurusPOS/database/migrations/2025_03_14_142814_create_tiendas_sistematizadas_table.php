@@ -16,15 +16,13 @@ return new class extends Migration
             $table->unsignedBigInteger('id_estado')->default(1);
             $table->unsignedBigInteger('id_token')->unique();
             $table->unsignedBigInteger('id_aplicacion_web');
-            $table->unsignedBigInteger('id_local_conectado');
             $table->unsignedBigInteger('id_cliente_taurus');
-            $table->binary('logo_tienda')->nullable(false);
-            $table->string('nombre_tienda')->nullable(false);
-            $table->string('nombre_representante')->nullable(false);
-            $table->unsignedBigInteger('id_tipo_documento')->nullable(false);
-            $table->string('numero_documento_ct')->nullable(false);
-            $table->string('email_tienda')->nullable(false)->unique();
-            $table->integer('contrasenia_tienda')->nullable(false)->unique();
+            $table->binary('logo_tienda');
+            $table->string('nombre_tienda');
+            $table->string('email_tienda')->unique();
+            $table->string('telefono_ct')->unique();
+            $table->string('direccion_ct');
+            $table->string('barrio_ct');
            
             $table->timestamp('fecha_creacion')->default(DB::raw('CURRENT_TIMESTAMP'));
             $table->timestamp('fecha_modificacion')->default(DB::raw('CURRENT_TIMESTAMP'))->useCurrentOnUpdate();
@@ -33,7 +31,6 @@ return new class extends Migration
             $table->foreign('id_estado')->references('id')->on('estados')->onDelete('cascade');
             $table->foreign('id_token')->references('id')->on('token_accesos')->onDelete('cascade');
             $table->foreign('id_aplicacion_web')->references('id')->on('aplicaciones_web')->onDelete('cascade');
-            $table->foreign('id_tipo_documento')->references('id')->on('tipo_documentos')->onDelete('cascade');
             $table->foreign('id_cliente_taurus')->references('id')->on('clientes_taurus')->onDelete('cascade');
         });
     }

@@ -14,20 +14,20 @@ return new class extends Migration
         Schema::create('clientes_taurus', function (Blueprint $table) {
             $table->id(); // ID autoincremental (equivalente a INT PRIMARY KEY AUTO_INCREMENT)
             $table->unsignedBigInteger('id_estado')->default(1);
-            $table->string('nombres_ct')->nullable(false);
-            $table->string('apellidos_ct')->nullable(false);
-            $table->string('nombre_ct')->nullable(false);
-            $table->unsignedBigInteger('id_tipo_documento')->nullable(false);
-            $table->string('numero_documento_ct')->nullable(false);
-            $table->string('email_ct')->nullable(false)->unique();
-            $table->integer('telefono_ct')->nullable(false)->unique();
-            $table->string('direccion_ct')->nullable(false);
-            $table->string('barrio_ct')->nullable(false);
+            $table->unsignedBigInteger('id_rol')->default(1);
+            $table->string('nombres_ct');
+            $table->string('apellidos_ct');
+            $table->unsignedBigInteger('id_tipo_documento');
+            $table->string('numero_documento_ct');
+            $table->string('email_ct')->unique();
+            $table->string('telefono_ct')->unique();
+           
             $table->timestamp('fecha_creacion')->default(DB::raw('CURRENT_TIMESTAMP'));
             $table->timestamp('fecha_modificacion')->default(DB::raw('CURRENT_TIMESTAMP'))->useCurrentOnUpdate();
             
             // Si necesitas una relación con otra tabla, por ejemplo, estados:
             $table->foreign('id_estado')->references('id')->on('estados')->onDelete('cascade');
+            $table->foreign('id_rol')->references('id')->on('roles_administrativos')->onDelete('cascade');
             $table->foreign('id_tipo_documento')->references('id')->on('tipo_documentos')->onDelete('cascade');
         });
     }

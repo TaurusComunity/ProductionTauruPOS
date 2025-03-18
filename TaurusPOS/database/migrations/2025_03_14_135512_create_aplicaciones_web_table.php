@@ -109,6 +109,10 @@ return new class extends Migration
                 'id_plan_aplicacion' => '4',
                 'nombre_app' => 'Shopper App'
             ],
+            [
+                'id_plan_aplicacion' => '4',
+                'nombre_app' => 'TaurusCO'
+            ],
             
             
         ]);

@@ -237,9 +237,9 @@ const formatearNumero = (value, maxDigits = 16, min = 0, max = 999999999999999) 
                             <p class="my-[5px] text-[14px]">Ingresa el precio final:</p>
                             <div class="input-insertar">
                                 <input type="text" min="0" max="999999999999999"
-                                 placeholder="Describela brevemente." v-model="precioEtiqueta"
+                                 placeholder="Precio de tu producto" v-model="precioEtiqueta"
                                  @input="precioEtiqueta = formatearNumero(precioEtiqueta)"/>
-                                <span class="material-symbols-rounded text-essentials-primary">format_italic</span>
+                                <span class="material-symbols-rounded text-essentials-primary">pin  </span>
                             </div>
                         </div>
                     </div>
