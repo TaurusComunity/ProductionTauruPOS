@@ -11,42 +11,52 @@ class LoginController extends Controller
     public function login(Request $request)
     {
         $request->validate([
-            'numero_documento_ct' => 'required|exists:clientes_taurus,numero_documento_ct',
-            'password' => 'required',
+            'numero_documento_ct' => 'required',
+            'contrasenia_ct' => 'required',
         ]);
 
-        // Autenticación manual usando Auth::attempt()
-        if (Auth::attempt([
-            'numero_documento_ct' => $request->numero_documento_ct,
-            'password' => $request->password
-        ])) {
-            $cliente = Auth::user()->load('rol', 'tienda'); // Cargar relaciones
+        // ✅ Verifica si el usuario existe
+        $cliente = \App\Models\ClienteTaurus::where('numero_documento_ct', $request->numero_documento_ct)->first();
 
-            // Verificar si el token es válido
-            if (!$cliente->tienda || !$cliente->tienda->token || !$cliente->tienda->token->token_activacion) {
-                Auth::logout();
-                return redirect()->back()->withErrors([
-                    'numero_documento_ct' => 'Token no válido o inactivo.'
-                ]);
-            }
-
-            // ✅ Redirigir según el rol usando Inertia::location()
-            if ($cliente->rol->id === 1) {
-                return Inertia::location(route('superAdmin.dashboard'));
-            } elseif ($cliente->rol->id === 2) {
-                return Inertia::location(route('admin.dashboard'));
-            } elseif ($cliente->rol->id === 3) {
-                return Inertia::location(route('cliente.dashboard'));
-            }
-
-            // Si no hay un rol válido, redirigir al login
-            return Inertia::location(route('login.auth'));
+        if (!$cliente) {
+            return Inertia::render('Auth/Auth', [
+                'errors' => ['numero_documento_ct' => 'El usuario no existe.']
+            ]);
         }
 
-        // ✅ Si las credenciales son incorrectas
-        return redirect()->back()->withErrors([
-            'numero_documento_ct' => 'Credenciales incorrectas.'
-        ]);
+        // ✅ Intenta autenticar
+        if (!Auth::attempt([
+            'numero_documento_ct' => $request->numero_documento_ct,
+            'password' => $request->contrasenia_ct, // ✅ Laravel usará automáticamente `contrasenia_ct`
+        ])) {
+            return redirect()->back()->withErrors([
+                'contrasenia_ct' => 'La contraseña es incorrecta.',
+            ]);
+        }
+
+        $cliente = Auth::user()->load('rol', 'tienda');
+
+        // ✅ Verifica si el token es válido
+        if (!$cliente->tienda || !$cliente->tienda->token || !$cliente->tienda->token->token_activacion) {
+            Auth::logout();
+            return Inertia::render('Auth/Auth', [
+                'errors' => ['numero_documento_ct' => 'Token no válido o inactivo.']
+            ]);
+        }
+
+        // ✅ Redirige según el rol del usuario usando `redirect()->intended()`
+        switch ($cliente->rol->id) {
+            case 1:
+                return redirect()->intended(route('admin.dashboard'));
+            case 2:
+                return redirect()->intended(route('cliente.dashboard'));
+            case 3:
+                return redirect()->intended(route('empleado.dashboard'));
+            case 4:
+                return Inertia::location(route('superAdmin.dashboard'));
+            default:
+                return redirect()->route('login.auth');
+        }
     }
 
     // ✅ Cierre de sesión
@@ -56,7 +66,6 @@ class LoginController extends Controller
         return redirect()->route('login.auth');
     }
 
-    // ✅ Mostrar formulario de login
     public function show()
     {
         return Inertia::render('Auth/Auth');

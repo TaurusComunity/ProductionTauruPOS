@@ -7,18 +7,10 @@ use Illuminate\Support\Facades\Auth;
 
 class CheckRole
 {
-    /**
-     * Manejar una solicitud entrante.
-     */
-    public function handle($request, Closure $next, ...$roles)
+    public function handle($request, Closure $next, $role)
     {
-        if (!Auth::check()) {
-            return redirect()->route('login.auth');
-        }
-
-        // ⚠️ Verifica que el rol recibido esté en la lista
-        if (!in_array(Auth::user()->id_rol, $roles)) {
-            abort(403, 'No tienes permiso para acceder a esta página');
+        if (!Auth::check() || Auth::user()->id_rol != $role) {
+            abort(403, 'No tienes permisos para acceder a esta sección.');
         }
 
         return $next($request);
