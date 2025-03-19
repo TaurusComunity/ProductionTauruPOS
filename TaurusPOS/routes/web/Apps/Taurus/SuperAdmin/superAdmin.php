@@ -3,12 +3,8 @@
 use Inertia\Inertia;
 use Illuminate\Support\Facades\Route;
 
-Route::prefix('TaurusCO/superAdmin')->group(function () {
+Route::prefix('TaurusCO/superAdmin')->middleware(['auth', 'check.role:4'])->group(function () {
     Route::get('/dashboard', function () {
-        return Inertia::render('SuperAdmin/Dashboard');
+        return Inertia::render('Apps/Taurus/Admin/Dashboard');
     })->name('superAdmin.dashboard');
 });
-
-Route::get('/swap', function () {
-    return Inertia::render('Swap');
-})->name('swap');

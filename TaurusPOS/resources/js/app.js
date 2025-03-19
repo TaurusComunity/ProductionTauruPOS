@@ -1,12 +1,26 @@
-import { createApp, h } from 'vue';
-import { createInertiaApp } from '@inertiajs/inertia-vue3';
-import { resolvePageComponent } from 'laravel-vite-plugin/inertia-helpers';
+import { createApp, h } from 'vue'
+import { createInertiaApp } from '@inertiajs/vue3'
+import { InertiaProgress } from '@inertiajs/progress'
+
+// Registrar TODAS las páginas con `import.meta.glob`
+const pages = import.meta.glob('./Pages/**/*.vue')
+
+const resolvePageComponent = (name) => {
+    const path = `./Pages/${name}.vue`
+    if (!pages[path]) {
+        throw new Error(`Page not found: ${path}`)
+    }
+    return pages[path]().then((module) => module.default)
+}
 
 createInertiaApp({
-  resolve: name => resolvePageComponent(`./Pages/${name}.vue`, import.meta.glob('./Pages/**/*.vue')),
-  setup({ el, App, props, plugin }) {
-    createApp({ render: () => h(App, props) })
-      .use(plugin)
-      .mount(el);
-  },
-});
+    title: (title) => `${title} - TaurusPOS`,
+    resolve: (name) => resolvePageComponent(name),
+    setup({ el, App, props, plugin }) {
+        createApp({ render: () => h(App, props) })
+            .use(plugin)
+            .mount(el)
+    },
+})
+
+InertiaProgress.init({ color: '#4B5563' })

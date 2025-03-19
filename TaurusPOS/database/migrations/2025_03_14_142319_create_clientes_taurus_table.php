@@ -19,8 +19,9 @@ return new class extends Migration
             $table->string('apellidos_ct');
             $table->unsignedBigInteger('id_tipo_documento');
             $table->string('numero_documento_ct');
+            $table->string('contrasenia_ct')->unique();
             $table->string('email_ct')->unique();
-            $table->string('telefono_ct')->unique();
+            $table->string('telefono_ct');
            
             $table->timestamp('fecha_creacion')->default(DB::raw('CURRENT_TIMESTAMP'));
             $table->timestamp('fecha_modificacion')->default(DB::raw('CURRENT_TIMESTAMP'))->useCurrentOnUpdate();

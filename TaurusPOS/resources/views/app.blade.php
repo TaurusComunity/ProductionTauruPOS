@@ -10,6 +10,7 @@
 
   @routes
   @vite(['resources/css/app.css', 'resources/js/app.js'])
+  <meta name="csrf-token" content="{{ csrf_token() }}">
   <!-- <title>Taurus POS</title> -->
 </head>
 <body class="bg-mono-negro scrollbar-custom">

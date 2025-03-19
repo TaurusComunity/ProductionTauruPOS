@@ -1,11 +1,25 @@
 <script>
 import { Head } from '@inertiajs/vue3';
 
+
 export default {
   name: 'Auth',
   components: {
     Head,
   },
+}
+</script>
+
+<script setup>
+import { useForm } from '@inertiajs/vue3'
+
+const form = useForm({
+  numero_documento_ct: '',
+  contrasenia_ct: ''
+})
+
+function submit() {
+  form.post('/login/auth')
 }
 </script>
 
@@ -26,10 +40,13 @@ export default {
                     <h2 class="text-[35px] font-bold mt-[20px]">Bienvenido Nuevamente 👋</h2>
                     <p class="text-[20px]">Hoy es un excelente dia para vender, inicia sesión y sácale el jugo a tu App.</p>
                 </div>
+                
 
-                <form action="#" method="post" class="mt-5 flex flex-col gap-5">
+                <form @submit.prevent="submit" class="mt-5 flex flex-col gap-5">
+                  <div v-if="form.errors.numero_documento_ct">{{ form.errors.numero_documento_ct }}</div>
                     <div class="w-[100%]">
                         <p class="my-[5px] text-[14px]">Usuario:</p>
+                        
                         <div
                           class="w-[100%] transition-all rounded-[5px] border-[1px] border-secundary-light p-[3px] flex items-center gap-[8px]"
                         >
@@ -39,17 +56,19 @@ export default {
                           >
             
                           <input
-                            type="number"
-                            id="user"
+                            type="text"
                             class="w-full focus:outline-none focus:border-none font-normal bg-mono-negro text-blanco"
                             placeholder="Ingresa tu usuario establecido."
-                            name="user"
+                           v-model="form.numero_documento_ct"
                           />
+                         
                         </div>
                       </div>
 
                     <div class="w-[100%]">
                         <p class="my-[5px] text-[14px]">Contraseña:</p>
+                       
+
                         <div
                           class="w-[100%] transition-all rounded-[5px] border-[1px] border-secundary-light p-[3px] flex items-center gap-[8px]"
                         >
@@ -60,10 +79,9 @@ export default {
             
                           <input
                             type="password"
-                            id="password"
                             class="w-full focus:outline-none focus:border-none font-normal bg-mono-negro text-blanco"
                             placeholder="Ingresa tu contraseña."
-                            name="password"
+                           v-model="form.password"
                           />
                         </div>
                       </div>

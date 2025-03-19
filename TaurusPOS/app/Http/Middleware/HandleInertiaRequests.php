@@ -18,9 +18,16 @@ class HandleInertiaRequests extends Middleware
      * Determine the current asset version.
      */
     public function version(Request $request): ?string
-    {
-        return parent::version($request);
+{
+    $manifestPath = public_path('build/manifest.json');
+
+    if (file_exists($manifestPath)) {
+        return md5_file($manifestPath);
     }
+
+    return null;
+}
+
 
     
     /**
@@ -34,7 +41,9 @@ class HandleInertiaRequests extends Middleware
         ...parent::share($request),
 
         'auth' => [
-            'user' => $request->user(),
+            'user' => $request->user()
+                ? $request->user()->load('tienda', 'rol') // Carga relaciones
+                : null,
         ],
 
         // Añade el nombre de la ruta actual

@@ -6,7 +6,7 @@
         "dev": "vite"
     },
     "devDependencies": {
-        "@inertiajs/vue3": "^2.0.0",
+        "@inertiajs/vue3": "^2.0.5",
         "@tailwindcss/forms": "^0.5.3",
         "@tailwindcss/vite": "^4.0.12",
         "@vitejs/plugin-vue": "^5.2.1",
@@ -22,9 +22,12 @@
     "dependencies": {
         "@inertiajs/inertia": "^0.11.1",
         "@inertiajs/inertia-vue3": "^0.6.0",
+        "@inertiajs/progress": "^0.2.7",
+        "events": "^3.3.0",
         "jsbarcode": "^3.11.6",
         "qrcode": "^1.5.4",
         "xlsx": "^0.18.5",
+        "ziggy": "^2.4.0",
         "ziggy-js": "^2.5.2"
     }
 }
