@@ -4,11 +4,11 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Rol extends Model
+class TipoDocumento extends Model
 {
-    protected $table = 'roles_administrativos';
+    protected $table = 'tipo_documentos';
 
     protected $fillable = [
-        'tipo_rol',
+        'documentos_legal',
     ];
 }

@@ -12,23 +12,28 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('clientes_taurus', function (Blueprint $table) {
-            $table->id(); // ID autoincremental (equivalente a INT PRIMARY KEY AUTO_INCREMENT)
+            $table->id(); 
             $table->unsignedBigInteger('id_estado')->default(1);
             $table->unsignedBigInteger('id_rol')->default(1);
+        
+            // ✅ Asegúrate de definir primero la columna
+            $table->unsignedBigInteger('id_tienda')->nullable();
+        
             $table->string('nombres_ct');
             $table->string('apellidos_ct');
             $table->unsignedBigInteger('id_tipo_documento');
-            $table->string('numero_documento_ct');
+            $table->string('numero_documento_ct')->unique();
             $table->string('contrasenia_ct')->unique();
             $table->string('email_ct')->unique();
             $table->string('telefono_ct');
            
             $table->timestamp('fecha_creacion')->default(DB::raw('CURRENT_TIMESTAMP'));
             $table->timestamp('fecha_modificacion')->default(DB::raw('CURRENT_TIMESTAMP'))->useCurrentOnUpdate();
-            
-            // Si necesitas una relación con otra tabla, por ejemplo, estados:
+        
+            // ✅ Añade las claves foráneas después de definir las columnas
             $table->foreign('id_estado')->references('id')->on('estados')->onDelete('cascade');
             $table->foreign('id_rol')->references('id')->on('roles_administrativos')->onDelete('cascade');
+            $table->foreign('id_tienda')->references('id')->on('tiendas_sistematizadas')->onDelete('cascade');
             $table->foreign('id_tipo_documento')->references('id')->on('tipo_documentos')->onDelete('cascade');
         });
     }

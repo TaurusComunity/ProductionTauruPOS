@@ -8,20 +8,17 @@ class TokenAcceso extends Model
 {
     protected $table = 'token_accesos';
 
+    public const CREATED_AT = 'fecha_creacion';
+    public const UPDATED_AT = 'fecha_modificacion';
+
     protected $fillable = [
-        'id_cliente_ct',
-        'id_estado',
         'token_activacion',
-        'id_tienda_sistematizada',
     ];
 
-    public $timestamps = false;
-
-    protected $primaryKey = 'id';
-
-    // Relaciones
-    public function cliente()
-    {
-        return $this->belongsTo(ClienteTaurus::class, 'id_cliente_tc');
-    }
+    public function tienda()
+{
+    return $this->belongsTo(TiendaSistematizada::class, 'id_tienda_sistematizada');
 }
+
+}
+

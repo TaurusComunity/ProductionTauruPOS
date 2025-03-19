@@ -1,5 +1,6 @@
 <script>
 import { Head } from '@inertiajs/vue3';
+import { useForm } from '@inertiajs/vue3'
 
 
 export default {
@@ -11,7 +12,6 @@ export default {
 </script>
 
 <script setup>
-import { useForm } from '@inertiajs/vue3'
 
 const form = useForm({
   numero_documento_ct: '',
@@ -91,8 +91,8 @@ function submit() {
             <button type="submit" class="btn-taurus">Iniciar sessión <span
                 class="material-symbols-rounded bg-transparent">bolt</span></button>
 
-            <p class="text-center">¿No tienes una cuenta con nosotros?, <a href=""
-                class="text-universal-azul">contáctenos</a>.</p>
+            <p class="text-center">¿No tienes una cuenta con nosotros?, <a
+                class="text-universal-azul">Registrate</a>.</p>
 
             <p class="text-universal-azul text-center text-[12px]">Versión Deimos 1.0.0</p>
 

@@ -1,45 +1,53 @@
 <template>
     <header class="w-full h-[100%] flex justify-between mb-[40px]">
-                    <div class="date flex gap-3 items-center">
-                        <div class="dia flex items-center justify-center font-semibold h-10 w-7 shadow-essentials bg-essentials-primary rounded-full"
-                            id="dia">
-                            {{ dia }}
-                        </div>
-                        <div class="mes-año flex flex-col text-[14px] font-medium" id="mes-año">
-                            <span id="mes">{{ mes }}</span>
-                            <span id="anio">{{ anio }}</span>
-                        </div>
-                        <div class="separador h-8 w-[2px] bg-essentials-primary rounded-lg"></div>
-                        <div class="hora text-[14px]" id="hora">{{ hora }}</div>
-                    </div>
+        <div class="date flex gap-3 items-center">
+            <div class="dia flex items-center justify-center font-semibold h-10 w-7 shadow-essentials bg-essentials-primary rounded-full"
+                id="dia">
+                {{ dia }}
+            </div>
+            <div class="mes-año flex flex-col text-[14px] font-medium" id="mes-año">
+                <span id="mes">{{ mes }}</span>
+                <span id="anio">{{ anio }}</span>
+            </div>
+            <div class="separador h-8 w-[2px] bg-essentials-primary rounded-lg"></div>
+            <div class="hora text-[14px]" id="hora">{{ hora }}</div>
+        </div>
 
-                    <div class="options-user flex gap-2 items-center justify-center">
-                        <div class="btn-link-disable">
-                            <span class="bg-transparent material-symbols-rounded">
-                                notifications
-                            </span>
+        <div class="options-user flex gap-2 items-center justify-center">
+            <div class="btn-link-disable">
+                <span class="bg-transparent material-symbols-rounded">
+                    notifications
+                </span>
+            </div>
+            <div class="btn-link-disable">
+                <span class="bg-transparent material-symbols-rounded">
+                    settings
+                </span>
+            </div>
+            <div class="logo flex gap-3 items-center">
+                <div class="gota h-10 w-10 shadow-essentials bg-essentials-primary rounded-full"></div>
+                <div class="logo">
+                    <div v-if="auth && auth.user">
+                        <h3 class="font-semibold"> {{ auth.user.nombres_ct }}</h3>
+                        <p class="-mt-[8px] text-secundary-light text-[13px] font-medium">
+                            {{ auth.user.rol?.tipo_rol || 'Sin rol' }}
+                        </p>
+                    </div>
+                        <div v-else>
+                            <p>Cargando información del usuario...</p>
                         </div>
-                        <div class="btn-link-disable">
-                            <span class="bg-transparent material-symbols-rounded">
-                                settings
-                            </span>
-                        </div>
-                        <div class="logo flex gap-3 items-center">
-                            <div class="gota h-10 w-10 shadow-essentials bg-essentials-primary rounded-full"></div>
-                            <div class="logo">
-                                <h3 class="font-semibold">Nombre de Usuario</h3>
-                                <p class="-mt-[8px] text-secundary-light text-[13px] font-medium">
-                                    Rol de perfil
-                                </p>
-                            </div>
                         </div>
                     </div>
+                </div>
 
-                </header>
+    </header>
 </template>
 
 <script setup>
+
 import { ref, onMounted, onUnmounted } from 'vue';
+
+
 
 //
 // Reloj en tiempo real
@@ -90,4 +98,11 @@ onMounted(() => {
 onUnmounted(() => {
     clearInterval(clockInterval);
 });
+
+// No se necesita 'export default' en este caso
+
+// Recibe el prop 'auth' desde el componente padre
+defineProps({
+    auth: Object,
+})
 </script>

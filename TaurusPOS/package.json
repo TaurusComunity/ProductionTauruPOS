@@ -26,6 +26,7 @@
         "events": "^3.3.0",
         "jsbarcode": "^3.11.6",
         "qrcode": "^1.5.4",
+        "vue-router": "^4.5.0",
         "xlsx": "^0.18.5",
         "ziggy": "^2.4.0",
         "ziggy-js": "^2.5.2"

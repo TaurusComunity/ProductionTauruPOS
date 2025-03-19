@@ -8,14 +8,10 @@ class AplicacionWeb extends Model
 {
     protected $table = 'aplicaciones_web';
 
-    protected $fillable = [
-        'id_estado',
-        'id_plan_aplicacion',
-        'nombre_app'
-    ];
+    public const CREATED_AT = 'fecha_creacion';
+    public const UPDATED_AT = 'fecha_modificacion';
 
-    public function tiendas()
-    {
-        return $this->hasMany(TiendaSistematizada::class, 'id_aplicacion_web');
-    }
+    protected $fillable = [
+        'nombre_app',
+    ];
 }

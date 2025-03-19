@@ -8,15 +8,19 @@ import CardHistorial from '@/Components/Dashboard/Essentials/CardHistorial.vue';
 
 
 export default {
-    name: 'Dashboard',
-    components: {
-        Head,
-    },
+  name: 'Dashboard',
+  components: {
+    Head,
+  },
 }
+
 </script>
 
 <script setup>
-
+// Asegúrate de tener 'auth' en las props del componente
+defineProps({
+  auth: Object
+})
 import { ref, onMounted, onUnmounted } from 'vue';
 
 //
@@ -77,10 +81,12 @@ onUnmounted(() => {
 
 
         <div class="bg-mono flex scrollbar-custom">
-            <Sidebar />
+            <Sidebar :auth="auth"/>
+           
+
 
             <main class="w-full h-[100%] px-[40px] py-[20px] bg-transparent">
-                <SaludoOpciones/>
+                <SaludoOpciones :auth="auth"/>
 
                 <div class="flex gap-[10px] ">
                     <div class="left w-[35%] h-[85vh] flex flex-col gap-5 justify-between px-3">

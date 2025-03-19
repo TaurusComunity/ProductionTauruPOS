@@ -9,6 +9,9 @@ Route::prefix('TaurusCO/superAdmin')->middleware('auth')->group(function () {
         if (!Gate::allows('access-role', 4)) {
             abort(403, 'No tienes permisos para acceder a esta sección.');
         }
-        return Inertia::render('Apps/Taurus/Admin/Dashboard');
+
+        $user = auth()->user();
+
+        abort(404);
     })->name('superAdmin.dashboard');
 });
