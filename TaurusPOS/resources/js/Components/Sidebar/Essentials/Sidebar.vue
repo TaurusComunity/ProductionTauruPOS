@@ -8,12 +8,13 @@ const currentRoute = computed(() => page.url); // Obtén la URL actual
 
 import logo from '@images/logoTC.svg';
 
-// No se necesita 'export default' en este caso
+import { router } from '@inertiajs/vue3'
 
-// Recibe el prop 'auth' desde el componente padre
-defineProps({
-  auth: Object,
-})
+// Método de logout
+const logout = () => {
+  // Realiza la petición POST al endpoint de logout usando la ruta 'logout'
+  router.post(route('logout'))
+}
 </script>
 
 

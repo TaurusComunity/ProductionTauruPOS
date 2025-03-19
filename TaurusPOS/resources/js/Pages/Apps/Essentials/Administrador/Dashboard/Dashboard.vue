@@ -92,7 +92,7 @@ onUnmounted(() => {
                     <div class="left w-[35%] h-[85vh] flex flex-col gap-5 justify-between px-3">
                         <div class="saludo-btn flex flex-col justify-center items-center gap-3">
                             <h4 class="text-[25px] text-center">
-                                <span id="saludo">{{ saludo }}</span> Nombre usuario!, espero te encuentres
+                                <span id="saludo">{{ saludo }}</span> {{ auth.user.nombres_ct }}, espero te encuentres
                                 muy bien, ¿Listo para vender?
                             </h4>
                             <p>La aplicación más profesional del mercado.</p>
