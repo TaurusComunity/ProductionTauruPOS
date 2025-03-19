@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('token_accesos', function (Blueprint $table) {
             $table->id(); // ID autoincremental (equivalente a INT PRIMARY KEY AUTO_INCREMENT)
             $table->unsignedBigInteger('id_estado')->default(1);
+            $table->unsignedBigInteger('id_cliente_ct');
             $table->unsignedBigInteger('id_tienda_sistematizada')->nullable();
             $table->string('token_activacion')->unique();
 

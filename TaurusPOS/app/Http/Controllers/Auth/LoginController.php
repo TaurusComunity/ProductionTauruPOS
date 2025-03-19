@@ -16,12 +16,10 @@ class LoginController extends Controller
         ]);
 
         // Autenticación manual usando Auth::attempt()
-        if (
-            Auth::attempt([
-                'numero_documento_ct' => $request->numero_documento_ct,
-                'password' => $request->password
-            ])
-        ) {
+        if (Auth::attempt([
+            'numero_documento_ct' => $request->numero_documento_ct,
+            'password' => $request->password
+        ])) {
             $cliente = Auth::user()->load('rol', 'tienda'); // Cargar relaciones
 
             // Verificar si el token es válido
@@ -32,33 +30,35 @@ class LoginController extends Controller
                 ]);
             }
 
-            // Redirigir según el rol
+            // ✅ Redirigir según el rol usando Inertia::location()
             if ($cliente->rol->id === 1) {
-                return redirect()->route('superAdmin.dashboard');
+                return Inertia::location(route('superAdmin.dashboard'));
             } elseif ($cliente->rol->id === 2) {
-                return redirect()->route('admin.dashboard');
+                return Inertia::location(route('admin.dashboard'));
             } elseif ($cliente->rol->id === 3) {
-                return redirect()->route('cliente.dashboard');
+                return Inertia::location(route('cliente.dashboard'));
             }
 
-            return redirect()->route('login.auth');
+            // Si no hay un rol válido, redirigir al login
+            return Inertia::location(route('login.auth'));
         }
 
+        // ✅ Si las credenciales son incorrectas
         return redirect()->back()->withErrors([
-            'numero_documento_ct' => 'Credenciales incorrectas'
+            'numero_documento_ct' => 'Credenciales incorrectas.'
         ]);
     }
 
-    // Cierre de sesión
+    // ✅ Cierre de sesión
     public function logout()
     {
         Auth::logout();
         return redirect()->route('login.auth');
     }
 
+    // ✅ Mostrar formulario de login
     public function show()
-{
-    return Inertia::render('Auth/Auth');
-}
-
+    {
+        return Inertia::render('Auth/Auth');
+    }
 }
