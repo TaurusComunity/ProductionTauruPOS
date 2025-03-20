@@ -476,10 +476,10 @@ body {
   -webkit-appearance: none;
   width: 100%;
   font-size: 14px;
-  padding: 6px 10px;
+  padding: 5px 10px;
   background-color: var(--secundary_opacity);
-  border: 2px solid var(--secundary_light);
-  border-radius: 8px;
+  border: 1px solid var(--secundary_light);
+  border-radius: 5px;
   color: var(--mono_blanco);
   cursor: pointer;
   outline: none;
@@ -487,8 +487,8 @@ body {
 
 .custom-select select:focus {
   background: var(--secundary_opacity);
-  border: 2px solid var(--primary_essentials);
-  border-radius: 8px;
+  border: 1px solid var(--naranja);
+  border-radius: 5px;
 }
 
 .custom-select::after {

@@ -2,7 +2,8 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
-use Inertia\Inertia;
+use App\Http\Controllers\TipoDocumentoController;
+
 
 // Mostrar el formulario de login
 
@@ -12,11 +13,10 @@ Route::prefix('login')->group(function () {
     Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
 });
 
-// Mostrar el formulario de registro
+
 Route::prefix('register')->group(function () {
-    Route::get('/auth', function () {
-        return Inertia::render('Auth/Registro');
-    })->name('register.auth');
+    // Mostrar el formulario de registro y cargar los tipos de documento
+    Route::get('/auth', [TipoDocumentoController::class, 'index'])->name('register.auth');
 
     // Ruta para procesar el registro (POST)
     Route::post('/auth', [RegisterController::class, 'register'])->name('register');

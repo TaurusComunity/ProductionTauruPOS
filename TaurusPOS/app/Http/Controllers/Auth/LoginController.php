@@ -23,6 +23,9 @@ class LoginController extends Controller
     $request->validate([
         'numero_documento_ct' => 'required|string',
         'contrasenia_ct' => 'required|string',
+    ], [
+        'numero_documento_ct.required' => 'El usuario es requerido.',
+        'contrasenia_ct.required' => 'La contraseña es requerida.',
     ]);
 
     // ✅ Verifica si el usuario existe
@@ -31,29 +34,29 @@ class LoginController extends Controller
         ->first();
 
     if (!$cliente) {
-        return redirect()->back()->withErrors([
-            'numero_documento_ct' => 'El usuario no existe.',
+        return back()->withErrors([
+            'numero_documento_ct' => 'No reconocemos ese usuario :(',
         ]);
     }
 
     // ✅ Intenta autenticar usando 'numero_documento_ct' y 'contrasenia_ct'
     if (!Hash::check($request->contrasenia_ct, $cliente->contrasenia_ct)) {
-        return redirect()->back()->withErrors([
-            'contrasenia_ct' => 'La contraseña es incorrecta.',
+        return back()->withErrors([
+            'contrasenia_ct' => 'Credenciales incorrectas, intenta de nuevo.',
         ]);
     }
 
-    Auth::login($cliente);  // Inicia sesión manualmente
+    Auth::login($cliente);
 
     // ✅ Validación de token
     if (
-        !$cliente->tienda || 
-        !$cliente->tienda->token || 
+        !$cliente->tienda ||
+        !$cliente->tienda->token ||
         !$cliente->tienda->token->token_activacion
     ) {
         Auth::logout();
-        return redirect()->back()->withErrors([
-            'numero_documento_ct' => 'Token no válido o inactivo.',
+        return back()->withErrors([
+            'numero_documento_ct' => 'Token no válido o inactivo, contactanos.',
         ]);
     }
 
@@ -63,7 +66,7 @@ class LoginController extends Controller
 
     if (!$nombreAplicacion || !$rol) {
         Auth::logout();
-        return redirect()->back()->withErrors([
+        return back()->withErrors([
             'numero_documento_ct' => 'Error al obtener aplicación o rol.',
         ]);
     }
@@ -74,6 +77,7 @@ class LoginController extends Controller
         'rol' => ucfirst($rol),
     ]);
 }
+
 
 
     // ✅ Cerrar sesión
